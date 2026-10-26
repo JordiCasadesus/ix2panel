@@ -1,0 +1,58 @@
+<!-- =====================================================
+     TAB GRUPOS
+     ===================================================== -->
+
+<div class="groups-layout two-column-layout">
+
+  <!-- COLUMNA IZQUIERDA -->
+  <div class="groups-left">
+    <div class="card-group">
+      <h2>Grupos</h2>
+
+      <div class="groups-box thin-scroll">
+        <input id="group-filter" type="text" placeholder="Filtrar grupos" />
+        <label class="groups-toggle">
+          <input type="checkbox" id="group-show-system" />
+          Mostrar grupos de sistema <span id="group-system-count"></span>
+        </label>
+        <div id="groups-list" class="groups-list list-compact"></div>
+      </div>
+
+      <div class="groups-actions">
+        <input id="new-group-name" type="text" placeholder="Nombre de grupo" />
+        <button id="btn-new-group" class="btn btn-block">Crear grupo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL DERECHO -->
+  <aside id="group-panel" class="card-group side-panel panel-scroll hidden">
+    <div class="panel-header">
+      <div class="panel-title">Grupo</div>
+      <div class="panel-subtitle" id="panel-group-name">Selecciona un grupo</div>
+    </div>
+
+    <div class="panel-section">
+      <h3>Identidad</h3>
+      <div class="panel-info">
+        <div><strong>Grupo:</strong> <span id="group-name">—</span></div>
+        <div><strong>GID:</strong> <span id="group-gid">—</span></div>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <h3>Miembros</h3>
+      <input id="group-member-filter" type="text" placeholder="Filtrar miembros" />
+      <div id="group-members" class="member-list list-compact"></div>
+    </div>
+
+    <div class="panel-section">
+      <h3>Añadir usuario</h3>
+      <div class="panel-info">
+        <select id="group-user-select"></select>
+        <button id="group-add-user" class="btn btn-block">Añadir</button>
+      </div>
+    </div>
+  </aside>
+
+</div>

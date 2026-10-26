@@ -1,0 +1,273 @@
+<!-- =====================================================
+     TAB SISTEMA
+     ===================================================== -->
+
+<style>
+details.card-group > summary {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  padding: 10px 0 8px;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+details.card-group > summary::before {
+  content: "▶";
+  font-size: 10px;
+  color: var(--text-muted);
+  transition: transform 0.15s;
+  display: inline-block;
+}
+details.card-group[open] > summary::before {
+  transform: rotate(90deg);
+}
+details.card-group > summary::-webkit-details-marker { display: none; }
+</style>
+
+<div class="updates-layout two-column-layout">
+
+  <!-- COLUMNA IZQUIERDA -->
+  <div>
+    <div class="card-group">
+      <h2>Actualizaciones</h2>
+
+      <div class="grid-1">
+        <div class="card card-inline">
+          <span class="label">Firmware</span>
+          <span class="value" id="updates-fw">-</span>
+        </div>
+        <div class="card card-inline">
+          <span class="label">Estado</span>
+          <span class="value" id="updates-state"><span class="status ok"></span> Al día</span>
+        </div>
+        <div class="card card-inline">
+          <span class="label">Última revisión</span>
+          <span class="value" id="updates-last-check">—</span>
+        </div>
+        <div class="card card-inline">
+          <span class="label">Paquetes</span>
+          <span class="value" id="updates-count">—</span>
+        </div>
+      </div>
+
+      <div class="card processes-info">
+        <div class="processes-list" id="updates-list"></div>
+      </div>
+    </div>
+
+    <details class="card-group">
+      <summary>Credenciales del panel</summary>
+
+      {% if panel_auth_mode != "panel" %}
+        <div class="card"><div class="sec-auth-note err">No disponible: AUTH_MODE="{{ panel_auth_mode }}".</div></div>
+      {% elif not panel_auth_can_change %}
+        <div class="card"><div class="sec-auth-note warn">{{ panel_auth_locked_reason }}</div></div>
+      {% else %}
+        <div class="card">
+          <div class="sec-auth-note" style="margin-bottom:10px">Usuario actual: <strong>{{ session.get('username','-') }}</strong></div>
+          <form id="security-auth-form" class="sec-auth-form" autocomplete="off">
+            <label for="sec-auth-current">Contraseña actual</label>
+            <input id="sec-auth-current" type="password" required />
+
+            {% if session.get('role') == 'admin' %}
+            <label for="sec-auth-user">Usuario</label>
+            <input id="sec-auth-user" type="text" maxlength="64" value="{{ session.get('username','') }}" />
+            {% endif %}
+
+            <label for="sec-auth-pass">Nueva contraseña</label>
+            <input id="sec-auth-pass" type="password" required />
+
+            <label for="sec-auth-pass2">Repite la nueva contraseña</label>
+            <input id="sec-auth-pass2" type="password" required />
+
+            <button id="sec-auth-save" type="submit" class="btn btn-block">Guardar</button>
+            <div id="sec-auth-status" class="sec-auth-status"></div>
+          </form>
+        </div>
+      {% endif %}
+    </details>
+
+    {% if session.get('role') == 'admin' and panel_auth_mode == 'panel' and panel_auth_can_change %}
+    <details class="card-group" id="panel-users-section">
+      <summary>Usuarios del panel</summary>
+      <div class="card">
+        <div class="sec-auth-note" style="margin-bottom:10px">viewer: solo lectura. operator: además logs, backups y reiniciar servicios. admin: todo. Un cambio de rol o un borrado se aplica en la siguiente petición del usuario afectado.</div>
+        <div id="pu-list" class="pu-list"></div>
+        <button id="pu-new" type="button" class="btn btn-block" style="margin-top:12px" aria-expanded="false" aria-controls="pu-form">Nuevo usuario</button>
+        <form id="pu-form" class="sec-auth-form hidden" autocomplete="off" style="margin-top:12px">
+          <label for="pu-user">Nombre de usuario</label>
+          <input id="pu-user" type="text" maxlength="32" autocomplete="off" required />
+
+          <label for="pu-pass">Contraseña (mín. 10, con mayúsculas, minúsculas y números)</label>
+          <input id="pu-pass" type="password" autocomplete="new-password" required />
+
+          <div class="pu-label" id="pu-role-label">Rol</div>
+          <div class="pu-roles" role="radiogroup" aria-labelledby="pu-role-label">
+            <label class="pu-radio"><input type="radio" name="pu-role" value="viewer" checked /> viewer</label>
+            <label class="pu-radio"><input type="radio" name="pu-role" value="operator" /> operator</label>
+            <label class="pu-radio"><input type="radio" name="pu-role" value="admin" /> admin</label>
+          </div>
+
+          <button id="pu-add" type="submit" class="btn btn-block">Crear usuario</button>
+        </form>
+        <div id="pu-status" class="sec-auth-status"></div>
+      </div>
+    </details>
+    {% endif %}
+
+    {% if session.get('role') == 'admin' %}
+    <details class="card-group" id="telegram-section">
+      <summary>Notificaciones Telegram</summary>
+
+      <div class="card">
+        <div class="panel-section" style="padding:0">
+          <h3>Conexión</h3>
+          <div class="panel-info">
+            <label class="label-inline" style="margin-bottom:10px">
+              <input type="checkbox" id="notif-enabled" />
+              Activar notificaciones
+            </label>
+            <label>Token del bot
+              <input id="notif-token" type="text" placeholder="123456789:AAF..." autocomplete="off" />
+            </label>
+            <label style="margin-top:8px;">Chat ID
+              <input id="notif-chat-id" type="text" placeholder="324496270" autocomplete="off" />
+            </label>
+          </div>
+        </div>
+
+        <div class="panel-section" style="padding:0;margin-top:12px">
+          <h3>Notificar cuando</h3>
+          <div class="panel-info">
+            <label class="label-inline"><input type="checkbox" id="notif-ev-backup_ok" /> Backup completado</label>
+            <label class="label-inline"><input type="checkbox" id="notif-ev-backup_err" /> Backup fallido</label>
+            <label class="label-inline"><input type="checkbox" id="notif-ev-backup_stale" /> Backup sin ejecutar</label>
+            <label class="label-inline"><input type="checkbox" id="notif-ev-nas_start" /> NAS arrancado</label>
+            <label class="label-inline"><input type="checkbox" id="notif-ev-service_down" /> Servicio caído</label>
+            <label class="label-inline"><input type="checkbox" id="notif-ev-disk_full" /> Disco lleno</label>
+            <label class="label-inline"><input type="checkbox" id="notif-ev-smart_fail" /> Fallo SMART en disco</label>
+            <label class="label-inline"><input type="checkbox" id="notif-ev-temp_high" /> Temperatura alta (&gt;75°C)</label>
+            <label class="label-inline"><input type="checkbox" id="notif-ev-ram_low" /> RAM crítica (&lt;30 MB)</label>
+            <label class="label-inline"><input type="checkbox" id="notif-ev-ip_change" /> IP pública cambiada</label>
+            <label class="label-inline"><input type="checkbox" id="notif-ev-login_ok" /> Login en el panel</label>
+            <label class="label-inline"><input type="checkbox" id="notif-ev-login_fail" /> Intentos de login fallidos</label>
+            <label class="label-inline"><input type="checkbox" id="notif-ev-wg_peer" /> WireGuard peer conecta/desconecta</label>
+          </div>
+        </div>
+
+        <div class="panel-actions" style="margin-top:14px">
+          <button id="notif-save" class="btn btn-block">Guardar</button>
+          <button id="notif-test" class="btn btn-block">Enviar prueba</button>
+        </div>
+        <div id="notif-status" class="sec-auth-status" style="margin-top:6px"></div>
+      </div>
+    </details>
+    {% endif %}
+    {% if session.get('role') == 'admin' %}
+    <details class="card-group" id="kernel-section">
+      <summary>Kernel del NAS</summary>
+      <div class="card">
+        <div class="panel-info">
+          <div><strong>Kernel en marcha:</strong> <span id="kn-running">—</span></div>
+          <div><strong>Instalado (/boot):</strong> <span id="kn-boot">—</span></div>
+          <div><strong>Copia anterior (.old):</strong> <span id="kn-old">—</span></div>
+          <div><strong>Preparado (.new):</strong> <span id="kn-new">—</span></div>
+        </div>
+        <div class="sec-auth-note" style="margin:10px 0">1) Baja el paquete del <a href="https://forum.doozan.com/read.php?2,12096" target="_blank" rel="noopener noreferrer">hilo de bodhi</a> (enlace de Dropbox y sha256 al principio del hilo) y súbelo aquí con ese sha256: el panel lo comprueba y prepara <code>uImage.new</code> y <code>uInitrd.new</code> sin tocar los actuales. 2) Prueba el arranque a mano desde U-Boot (consola serie) con esos ficheros. 3) Si arranca bien, vuelve aquí y pulsa Activar: el kernel actual queda como <code>.old</code>. No se puede con un backup en marcha.</div>
+        <form id="kn-form" class="sec-auth-form" autocomplete="off">
+          <label for="kn-file">Paquete (linux-X.Y.Z-kirkwood-tld-N-bodhi.tar.bz2)</label>
+          <input id="kn-file" type="file" accept=".bz2" />
+          <label for="kn-sha">sha256 del paquete</label>
+          <input id="kn-sha" type="text" maxlength="64" spellcheck="false" autocomplete="off" />
+          <button id="kn-upload" type="submit" class="btn btn-block">Subir y preparar</button>
+        </form>
+        <progress id="kn-progress" class="hidden" max="100" value="0"></progress>
+        <div id="kn-status" class="sec-auth-status"></div>
+        <pre id="kn-log" class="updates-action-output hidden"></pre>
+        <div class="panel-actions" style="margin-top:12px">
+          <button id="kn-activate" type="button" class="btn btn-block btn-danger" disabled>Activar (dejar fijo)</button>
+          <button id="kn-discard" type="button" class="btn btn-block" disabled>Descartar lo preparado</button>
+        </div>
+      </div>
+    </details>
+    {% endif %}
+  </div>
+
+  <!-- PANEL DERECHO -->
+  <aside id="updates-panel" class="card-group side-panel panel-scroll">
+    <div class="panel-header">
+      <div class="panel-title">Detalle</div>
+      <div class="panel-subtitle" id="update-panel-title">Selecciona una actualización</div>
+    </div>
+
+    <div class="panel-section">
+      <h3>Paquete</h3>
+      <div class="panel-info">
+        <div><strong>Nombre:</strong> <span id="update-name">—</span></div>
+        <div><strong>Versión:</strong> <span id="update-version">—</span></div>
+        <div><strong>Tamaño:</strong> <span id="update-size">—</span></div>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <h3>Actualizaciones aplicadas</h3>
+      <div class="panel-actions">
+        <button id="updates-run" class="btn btn-block" title="Aplica actualizaciones del sistema. Puede tardar varios minutos.">Actualizar</button>
+      </div>
+      <div id="updates-action-status" class="updates-action-status">-</div>
+      <pre id="updates-action-output" class="updates-action-output hidden"></pre>
+    </div>
+
+    {% if session.get('role') == 'admin' %}
+    <div class="panel-section">
+      <h3>Panel</h3>
+      <div class="panel-actions">
+        <button id="updates-restart-panel" class="btn btn-block">Reiniciar panel</button>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if session.get('role') == 'admin' %}
+    <div class="panel-section danger-zone">
+      <h3>Zona peligrosa</h3>
+      <p class="danger-note">Afecta a todo el NAS: el panel dejará de responder hasta que arranque de nuevo.</p>
+      <div class="panel-actions">
+        <button id="updates-reboot" class="btn btn-block btn-danger">Reiniciar NAS</button>
+        <button id="updates-shutdown" class="btn btn-block btn-danger">Apagar NAS</button>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="panel-section">
+      <h3>Apagado programado</h3>
+      <div class="panel-info" style="margin-bottom:10px">
+        <div><strong>Estado:</strong> <span id="power-enabled-label">—</span></div>
+        <div><strong>Próximo apagado:</strong> <span id="power-next-shutdown">—</span></div>
+      </div>
+      {% if session.get('role') == 'admin' %}
+      <div class="power-form">
+        <label class="power-label">Apagar a las
+          <input type="time" id="power-shutdown-time" value="02:00" class="power-input">
+        </label>
+        <label class="power-label">Días
+          <select id="power-days" class="power-input">
+            <option value="all">Todos</option>
+            <option value="workdays">Laborables (L-V)</option>
+          </select>
+        </label>
+        <div class="panel-actions" style="margin-top:8px">
+          <button id="power-enable" class="btn btn-block">Activar</button>
+          <button id="power-disable" class="btn btn-block">Desactivar</button>
+        </div>
+        <div class="sec-auth-note" style="margin-top:8px">Si a esa hora hay un backup en marcha, el apagado espera a que termine (máx. 3 h) y te avisa por Telegram.</div>
+      </div>
+      {% endif %}
+    </div>
+  </aside>
+
+</div>
+

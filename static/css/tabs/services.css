@@ -1,0 +1,20 @@
+/* =====================================================
+   SERVICES TAB
+   ===================================================== */
+
+#tab-servicios .services-list {
+  max-height: none;
+}
+
+#tab-servicios .process-item {
+  background: var(--bg-section);
+}
+
+#tab-servicios .process-item:hover {
+  background: var(--bg-card-alt);
+}
+
+#tab-servicios .process-item.row-interactive.active {
+  background: var(--bg-top);
+  border-left: 3px solid var(--accent);
+}

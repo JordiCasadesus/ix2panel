@@ -1,0 +1,579 @@
+/* =====================================================
+   DISKS TAB – Layout NAS (fila por partición)
+   ===================================================== */
+
+/* Contenedor principal */
+#tab-disks #disks-detail {
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+
+/* =======================
+   Grupo de disco
+   ======================= */
+
+#tab-disks .disk-group-header {
+  /* background: var(--bg-card); */
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--accent);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* padding-bottom: 4px; 
+   border-bottom: 1px solid var(--border-soft); */
+}
+
+#tab-disks .disk-group-header .disk-title {
+  white-space: nowrap;
+}
+
+#tab-disks .disk-group-header .disk-io {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+#tab-disks .disk-wave-wrap {
+  margin: 4px 0 6px;
+  --wave-rx: #5ac8fa;
+  --wave-tx: #7ee081;
+}
+
+#tab-disks .disk-wave {
+  width: 100%;
+  height: 48px;
+  display: block;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
+}
+
+#tab-disks .disk-wave-legend {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+#tab-disks .disk-wave-legend .wave-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#tab-disks .disk-wave-legend .wave-key::before {
+  content: "";
+  width: 10px;
+  height: 2px;
+  background: var(--text-muted);
+  display: inline-block;
+  border-radius: 2px;
+}
+
+#tab-disks .disk-wave-legend .wave-key.rx::before {
+  background: var(--wave-rx);
+}
+
+#tab-disks .disk-wave-legend .wave-key.tx::before {
+  background: var(--wave-tx);
+}
+   
+
+#tab-disks .disk-group {
+  background: var(--bg-card);
+  border: 2px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+
+/* =======================
+   Fila de partición
+   ======================= */
+
+#tab-disks .partition-row {
+  padding: 4px 10px;  
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  display: grid;
+  grid-template-columns: 140px 1fr auto auto;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-section);
+}
+
+#tab-disks .partition-row.row-interactive:hover {
+  background: var(--bg-card-alt);
+}
+
+#tab-disks .partition-row.row-interactive.active {
+  background: var(--bg-section);
+  border-left: 3px solid var(--accent);
+}
+
+/* Nombre de la partición */
+#tab-disks .partition-name {
+  font-weight: 500;
+  white-space: nowrap;
+  padding-right: 4px;
+}
+
+/* =======================
+   Barra de uso (CLAVE)
+   ======================= */
+
+#tab-disks .partition-bar {
+  height: 10px;                 /* ← SI NO HAY ALTURA, NO SE VE */
+  background: var(--bg-card-alt);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+#tab-disks .partition-bar .fill {
+  height: 100%;
+}
+
+/* =======================
+   Metadatos
+   ======================= */
+
+#tab-disks .partition-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#tab-disks .partition-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 92px;
+}
+
+#tab-disks .partition-action {
+  margin-left: 0;
+  background: transparent;
+  border: 1px solid var(--border-soft);
+  color: var(--text-muted);
+  border-radius: 6px;
+  padding: 2px 8px;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+#tab-disks .partition-action:hover {
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* =======================
+   Colores por tipo
+   ======================= */
+#tab-disks .fill.system { background: var(--part-system); }
+#tab-disks .fill.data   { background: var(--part-data); }
+#tab-disks .fill.efi    { background: var(--part-efi); }
+#tab-disks .fill.rec    { background: var(--part-rec); }
+#tab-disks .fill.usb    { background: var(--part-usb); }
+/* =======================
+   Leyenda de tipos
+   ======================= */
+
+#tab-disks .disk-legend {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: var(--gap-sm);
+  padding: 6px 8px;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+#tab-disks .legend-item {
+  display: inline-flex;
+  align-items: center;
+}
+
+#tab-disks .legend-item::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+/* Colores */
+#tab-disks .legend-item.system::before { background: var(--part-system); }
+#tab-disks .legend-item.data::before   { background: var(--part-data); }
+#tab-disks .legend-item.efi::before    { background: var(--part-efi); }
+#tab-disks .legend-item.rec::before    { background: var(--part-rec); }
+#tab-disks .legend-item.usb::before    { background: var(--part-usb); }
+/* =======================
+   Panel lateral
+   ======================= */
+
+#tab-disks #partition-panel {
+  overflow-y: auto;
+  max-height: 100%;
+  background: var(--bg-section);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: var(--gap-sm);
+  font-size: 15px;
+  width: 100%;
+}
+
+#tab-disks #partition-panel.hidden {
+  display: none;
+}
+
+#tab-disks .panel-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+#tab-disks .panel-subtitle {
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+/* Mini barra */
+#tab-disks .panel-bar {
+  height: 6px;
+  background: var(--bg-card-alt);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+#tab-disks .panel-bar .fill {
+  height: 100%;
+}
+
+#tab-disks .panel-usage {
+  font-size: 15px;
+  color: var(--text-muted);
+}
+
+#tab-disks .panel-section h3 {
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+/* =======================
+   Carpetas (panel lateral)
+   ======================= */
+
+#tab-disks .folder-breadcrumb {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 6px; 
+} 
+
+#tab-disks .disk-folder-box {
+  width: 100%;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 4px 0;
+  max-height: 380px;
+  min-height: 260px;
+  overflow-y: auto;
+  margin-bottom: 8px;
+}
+
+#tab-disks .crumb {
+  margin-right: 4px;
+}
+
+/* Árbol */
+#tab-disks .folder-tree .tree-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 4px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-soft);
+  font-size: 13px;
+}
+
+#tab-disks .folder-tree .tree-row:hover {
+  background: var(--bg-top);
+}
+
+#tab-disks .folder-tree .tree-row.tree-sel {
+  background: rgba(79, 140, 255, 0.15);
+}
+
+#tab-disks .folder-tree .tree-lbl {
+  flex: 1;
+}
+
+/* Item */
+#tab-disks .folder-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  cursor: pointer;
+}
+
+/* Icono */
+#tab-disks .folder-icon {
+  width: 14px;
+  text-align: center;
+}
+
+#tab-disks .folder-icon::before {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 8px;
+  border: 1px solid var(--text-muted);
+  border-radius: 2px;
+  background: transparent;
+  box-shadow: inset 0 2px 0 0 var(--text-muted);
+}
+
+/* Indentación */
+#tab-disks .folder-item.child {
+  padding-left: 18px;
+}
+
+#tab-disks .folder-item.subchild {
+  padding-left: 32px;
+}
+
+/* Nombre */
+#tab-disks .folder-name {
+  font-size: 12px;
+}
+/* =======================
+   Acciones de carpetas
+   ======================= */
+
+#tab-disks .folder-actions {
+  margin-bottom: 6px;
+  display: flex;
+  gap: 6px;
+}
+
+#tab-disks .folder-actions .btn {
+  flex: 1;
+}
+
+/* Crear carpeta */
+#tab-disks .folder-create {
+  margin-bottom: 8px;
+}
+
+#tab-disks .folder-create.hidden {
+  display: none;
+}
+
+#tab-disks .folder-create input {
+  width: 100%;
+  padding: 6px;
+  margin-bottom: 6px;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-soft);
+  color: var(--text-main);
+  border-radius: var(--radius);
+}
+
+#tab-disks .folder-create-actions {
+  display: flex;
+  gap: 6px;
+}
+
+#tab-disks .folder-create-actions .btn {
+  flex: 1;
+}
+
+
+/* =======================
+   Permisos (panel lateral)
+   ======================= */
+
+#tab-disks .perm-path {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+#tab-disks .perm-block {
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 6px;
+  margin-bottom: 8px;
+  background: var(--bg-card-alt);
+}
+
+#tab-disks .perm-title {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--text-main);
+}
+
+#tab-disks .perm-row {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+#tab-disks .perm-label {
+  margin-right: 4px;
+}
+
+#tab-disks .perm-checks {
+  display: flex;
+  gap: 10px;
+  font-size: 11px;
+}
+
+#tab-disks .perm-checks label {
+  cursor: pointer;
+}
+
+#tab-disks .perm-checks input {
+  margin-right: 4px;
+}
+
+/* =======================
+   Usuarios / Grupos
+   ======================= */
+
+#tab-disks .ug-block {
+  margin-bottom: 8px;
+}
+
+#tab-disks .ug-block label {
+  display: block;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+#tab-disks .ug-block select {
+  width: 100%;
+  padding: 6px;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-soft);
+  color: var(--text-main);
+  border-radius: var(--radius);
+}
+
+#tab-disks .ug-lists {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap-sm);
+  margin-top: 8px;
+}
+
+#tab-disks .ug-list {
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 6px;
+  font-size: 11px;
+}
+
+#tab-disks .ug-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--text-main);
+}
+
+#tab-disks .ug-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#tab-disks .ug-list li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+#tab-disks .tag.admin {
+  font-size: 10px;
+  color: #fff;
+  background: var(--accent);
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
+
+
+#tab-disks .disks-left {
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+
+/* --- Folder tree (tree-item style igual que compartidas) --- */
+.disk-folder-box .tree-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 13px;
+  color: var(--text);
+}
+.disk-folder-box .tree-item:hover { background: rgba(79,140,255,0.12); }
+.disk-folder-box .tree-item.active { background: rgba(79,140,255,0.22); }
+.disk-folder-box .tree-folder-icon { width: 16px; text-align: center; flex-shrink: 0; }
+.disk-folder-box .tree-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* =====================================================
+   TEST SMART PROGRAMADO
+   ===================================================== */
+#smart-test-section .smart-sched-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0;
+}
+#smart-test-section .smart-sched-row label {
+  font-size: 13px;
+  color: var(--text);
+}
+#smart-test-section select,
+#smart-test-section input[type="time"] {
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+#smart-sched-status {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+#smart-sched-hint {
+  font-size: 12px;
+  margin-top: 4px;
+}

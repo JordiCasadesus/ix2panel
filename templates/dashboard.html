@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <section id="tab-estado" class="tab-content">
+      {% include "tabs/dashboard-main.html" %}
+    </section>
+
+    <section id="tab-disks" class="tab-content hidden">
+      {% include "tabs/disks.html" %}
+    </section>
+
+    <section id="tab-compartidas" class="tab-content hidden">
+      {% include "tabs/shares.html" %}
+    </section>
+
+    <section id="tab-usuarios" class="tab-content hidden">
+      {% include "tabs/users.html" %}
+    </section>
+
+    <section id="tab-grupos" class="tab-content hidden">
+      {% include "tabs/groups.html" %}
+    </section>
+
+    <section id="tab-procesos" class="tab-content hidden">
+      {% include "tabs/processes.html" %}
+    </section>
+
+    <section id="tab-red" class="tab-content hidden">
+      {% include "tabs/red.html" %}
+    </section>
+
+    <section id="tab-servicios" class="tab-content hidden">
+      {% include "tabs/services.html" %}
+    </section>
+
+
+
+
+    <section id="tab-backups" class="tab-content hidden">
+      {% include "tabs/backups.html" %}
+    </section>
+
+    <section id="tab-logs" class="tab-content hidden">
+      {% include "tabs/logs.html" %}
+    </section>
+
+    <section id="tab-updates" class="tab-content hidden">
+      {% include "tabs/updates.html" %}
+    </section>
+
+    <section id="tab-wireguard" class="tab-content hidden">
+      {% include "tabs/wireguard.html" %}
+    </section>
+
+    {% if session.get('role') == 'admin' %}
+    <section id="tab-terminal" class="tab-content hidden">
+      {% include "tabs/terminal.html" %}
+    </section>
+    {% endif %}
+
+{% endblock %}

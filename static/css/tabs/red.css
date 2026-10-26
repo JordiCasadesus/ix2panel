@@ -1,0 +1,130 @@
+/* =====================================================
+   RED TAB
+   ===================================================== */
+
+/* Summary bar */
+#tab-red .net-summary-card {
+  margin-bottom: 12px;
+}
+
+#tab-red .net-summary-row {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+#tab-red .net-summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+#tab-red .net-summary-item .label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+#tab-red .net-summary-item .value {
+  font-size: 14px;
+  color: var(--text-main);
+}
+
+/* Interfaces grid */
+#tab-red .net-ifaces-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+#tab-red .net-iface-card {
+  padding: 14px 16px;
+}
+
+#tab-red .net-iface-card.net-iface-down {
+  opacity: 0.5;
+}
+
+#tab-red .net-iface-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#tab-red .net-iface-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#tab-red .net-iface-speed {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+#tab-red .net-detail-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+#tab-red .net-detail-row:last-of-type {
+  border-bottom: none;
+}
+
+#tab-red .net-detail-row .label {
+  color: var(--text-muted);
+  white-space: nowrap;
+  margin-right: 8px;
+}
+
+#tab-red .net-detail-row .value {
+  font-family: monospace;
+  font-size: 12px;
+  text-align: right;
+  word-break: break-all;
+}
+
+#tab-red .net-ipv6 {
+  font-size: 10px;
+}
+
+/* Traffic section */
+#tab-red .net-traffic-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+#tab-red .net-traffic-col {
+  flex: 1;
+  background: var(--bg-hover);
+  border-radius: 6px;
+  padding: 7px 10px;
+  text-align: center;
+}
+
+#tab-red .net-traffic-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+#tab-red .net-traffic-total {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+#tab-red .net-traffic-speed {
+  font-size: 11px;
+  color: var(--accent);
+  margin-top: 1px;
+}

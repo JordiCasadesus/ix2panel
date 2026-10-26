@@ -1,0 +1,35 @@
+{
+    "name": "ix2panel NAS",
+    "host": "IP_DEL_NAS",
+    "protocol": "sftp",
+    "port": 22,
+    "username": "TU_USUARIO",
+    "privateKeyPath": "RUTA/A/TU/CLAVE_PRIVADA",
+    "remotePath": "/etc/ix2panel",
+    "uploadOnSave": true,
+    "downloadOnOpen": false,
+    "syncOption": {
+        "delete": false,
+        "skipCreate": false,
+        "ignoreExisting": false
+    },
+    "ignore": [
+        ".git",
+        ".vscode",
+        "__pycache__",
+        "*.pyc",
+        ".DS_Store",
+        "Copia_A_NAS.bat",
+        "caca",
+        ".panel_auth.json",
+        ".panel_auth.json.tmp",
+        "Seguridad.txt",
+        "Traspaso_nuevo_chat.txt",
+        "Backup_boot_NAS"
+    ],
+    "watcher": {
+        "files": "**/*.{py,html,css,js,txt}",
+        "autoUpload": true,
+        "autoDelete": false
+    }
+}

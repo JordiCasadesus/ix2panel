@@ -1,0 +1,48 @@
+<!-- =====================================================
+     TAB RED
+     ===================================================== -->
+
+<div class="card-group">
+  <h2>Red</h2>
+
+  <!-- Info general -->
+  <div class="card net-summary-card">
+    <div class="net-summary-row">
+      <div class="net-summary-item">
+        <span class="label">Hostname</span>
+        <span class="value monospace" id="net-hostname">—</span>
+      </div>
+      <div class="net-summary-item">
+        <span class="label">Puerta de enlace</span>
+        <span class="value" id="net-gateway">—</span>
+      </div>
+      <div class="net-summary-item">
+        <span class="label">DNS</span>
+        <span class="value" id="net-dns">—</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interfaces (DDNS se añade aquí vía JS) -->
+  <div id="net-ifaces-grid" class="net-ifaces-grid"></div>
+</div>
+
+{% if session.get('role') != 'viewer' %}
+<div class="card-group" style="margin-top:1.5rem;">
+  <h2>Wake-on-LAN</h2>
+  <div class="card processes-info">
+    <div class="processes-list" id="wol-targets-list"></div>
+    <div id="wol-msg" style="margin-top:0.5rem;font-size:0.85em;"></div>
+  </div>
+  <div class="card" style="margin-top:0.75rem;">
+    <div style="font-size:0.85em;font-weight:600;margin-bottom:8px;">Añadir equipo</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:flex-end;">
+      <input id="wol-new-name" type="text" placeholder="Nombre" style="flex:1;min-width:90px;" />
+      <input id="wol-new-mac" type="text" placeholder="MAC (aa:bb:cc:dd:ee:ff)" style="flex:2;min-width:160px;" />
+      <input id="wol-new-ip" type="text" placeholder="IP (opcional)" style="flex:1;min-width:100px;" />
+      <button id="wol-add-btn" class="btn btn-sm" type="button">Añadir</button>
+    </div>
+    <div id="wol-add-msg" style="margin-top:4px;font-size:0.82em;"></div>
+  </div>
+</div>
+{% endif %}

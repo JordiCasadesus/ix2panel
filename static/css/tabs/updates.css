@@ -1,0 +1,165 @@
+/* =====================================================
+   UPDATES / SISTEMA TAB
+   ===================================================== */
+
+#tab-updates #updates-list .process-item:not(.active) {
+  background: var(--bg-section);
+}
+
+#tab-updates .updates-action-status {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+#tab-updates .updates-action-status.ok {
+  color: var(--accent);
+}
+
+#tab-updates .updates-action-status.err {
+  color: var(--err);
+}
+
+#tab-updates .updates-action-output {
+  margin-top: 10px;
+  max-height: 260px;
+  overflow: auto;
+  padding: 10px;
+  border-radius: var(--radius);
+  background: var(--bg-section);
+  border: 1px solid var(--border-soft);
+  font-size: 12px;
+  line-height: 1.35;
+  white-space: pre-wrap;
+  color: var(--text-main);
+}
+
+/* Apagado programado */
+.power-form { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
+.power-label { display: flex; flex-direction: column; gap: 3px; font-size: 12px; color: var(--text-muted); }
+.power-input { background: var(--bg-card); border: 1px solid var(--border-soft); border-radius: 4px; color: var(--text-main); padding: 5px 8px; font-size: 13px; }
+.btn-danger { background: #7a1a1a !important; color: #ffaaaa !important; }
+.btn-danger:hover { background: #a02020 !important; }
+
+/* Credenciales del panel */
+#tab-updates .sec-auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#tab-updates .sec-auth-form label {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+#tab-updates .sec-auth-form input {
+  background: var(--bg-section);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 8px;
+  outline: none;
+}
+
+#tab-updates .sec-auth-form input:focus {
+  border-color: rgba(80, 140, 255, 0.6);
+}
+
+#tab-updates .sec-auth-status {
+  min-height: 1.1em;
+  font-size: 0.85rem;
+  opacity: 0.95;
+}
+
+#tab-updates .sec-auth-status.ok { color: var(--green); }
+#tab-updates .sec-auth-status.err { color: var(--red); }
+#tab-updates .sec-auth-status.warn { color: var(--yellow); }
+
+#tab-updates .sec-auth-note {
+  font-size: 0.9rem;
+  opacity: 0.95;
+}
+
+#tab-updates .sec-auth-note.err { color: var(--red); }
+#tab-updates .sec-auth-note.warn { color: var(--yellow); }
+
+/* Usuarios del panel */
+#tab-updates .pu-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+#tab-updates .pu-name {
+  flex: 1 1 90px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#tab-updates .pu-row .btn {
+  width: auto;
+  padding: 5px 10px;
+}
+#tab-updates .pu-roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+#tab-updates .pu-row .pu-roles {
+  flex-wrap: nowrap;
+  gap: 12px;
+  padding-left: 12px;
+  border-left: 1px solid var(--border-soft);
+}
+#tab-updates .pu-label {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+#tab-updates .pu-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+#tab-updates .sec-auth-form .pu-radio input,
+#tab-updates .pu-radio input {
+  width: auto;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+/* Barra de progreso backup */
+.backup-progress-bar-wrap {
+  background: var(--bg3);
+  border-radius: 4px;
+  height: 12px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+.backup-progress-bar {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 4px;
+  transition: width 1s ease;
+  width: 0%;
+}
+
+/* Botones dentro de card (fondo igual que .btn, no contrasta) */
+#tab-updates details.card-group .panel-actions .btn {
+  background: var(--bg-section);
+  border-color: var(--border);
+}
+#tab-updates details.card-group .panel-actions .btn:hover {
+  background: var(--bg-card-alt);
+  border-color: var(--accent);
+}
+
+/* Kernel del NAS */
+#kernel-section progress { width: 100%; margin-top: 10px; }
+#kernel-section input[type="file"] { font-size: 12px; color: var(--text-main); }
+#kernel-section code { font-size: 12px; }

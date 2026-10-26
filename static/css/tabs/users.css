@@ -1,0 +1,288 @@
+/* =====================================================
+   USERS TAB
+   ===================================================== */
+
+/* =======================
+   Lista de usuarios
+   ======================= */
+
+#tab-usuarios .users-left {
+  align-self: start;
+}
+
+#tab-usuarios .users-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 4px;
+}
+
+/* Fila */
+#tab-usuarios .user-row {
+  display: grid;
+  grid-template-columns: 1fr 80px 90px;
+  align-items: center;
+  padding: 6px 10px;
+}
+
+/* Columnas */
+#tab-usuarios .user-name {
+  font-weight: 500;
+}
+
+#tab-usuarios .user-role {
+  font-size: 15px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+#tab-usuarios .user-status {
+  font-size: 15px;
+  text-align: right;
+}
+
+/* Estados */
+#tab-usuarios .user-status.activo {
+  color: var(--ok);
+}
+
+#tab-usuarios .user-status.bloqueado {
+  color: var(--err);
+}
+
+/* =======================
+   Acciones
+   ======================= */
+
+#tab-usuarios .users-actions {
+  margin-top: var(--gap-sm);
+}
+
+#tab-usuarios .users-actions .btn {
+  width: 100%;
+}
+
+#tab-usuarios .users-actions {
+  display: flex;
+  gap: 8px;
+}
+
+#tab-usuarios .btn-danger {
+  background: #4a1d1d;
+  border: 1px solid #7a2a2a;
+  color: #ffd1d1;
+}
+
+#tab-usuarios .btn-danger:hover {
+  background: #5a2222;
+}
+
+/* =======================
+   Panel lateral
+   ======================= */
+
+#tab-usuarios #user-panel {
+  overflow-y: auto;
+  background: var(--bg-section);
+}
+
+/* =======================
+   Grupos
+   ======================= */
+
+#tab-usuarios .groups-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 11px;
+}
+
+/* Jerarquía visual en panel lateral */
+
+#tab-usuarios .panel-section .panel-info,
+#tab-usuarios .panel-section .groups-block {
+  padding-left: 10px;
+  border-left: 2px solid var(--border-soft);
+}
+
+
+/* Panel info blocks */
+#tab-usuarios .panel-info.mono {
+  font-family: monospace;
+  margin-left: 16px;
+}
+
+/* Status labels */
+#tab-usuarios .status {
+  margin-left: 6px;
+  font-weight: 600;
+}
+
+#tab-usuarios .status.ok {
+  color: var(--ok);
+}
+
+#tab-usuarios .status.warn {
+  color: var(--warn);
+}
+
+#tab-usuarios .status-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#tab-usuarios .status-line .status {
+  margin-left: 0;
+}
+
+/* Groups */
+#tab-usuarios .groups-block {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+#tab-usuarios .group {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+}
+
+#tab-usuarios .group.main {
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+#tab-usuarios .delete-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-soft);
+}
+
+#tab-usuarios .delete-options .checkline {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.2;
+}
+
+#tab-usuarios .delete-options.hidden {
+  display: none;
+}
+
+#tab-usuarios .delete-options-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+#tab-usuarios .delete-options-actions .btn {
+  flex: 1;
+}
+
+/* =======================
+   Modal
+   ======================= */
+
+#tab-usuarios .modal,
+#user-modal.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 12, 20, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+#user-modal.hidden {
+  display: none;
+}
+
+#user-modal .modal-content {
+  width: 420px;
+  max-width: 92vw;
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+#user-modal .modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+#user-modal .modal-title {
+  font-weight: 600;
+}
+
+#user-modal .modal-close {
+  background: transparent;
+  border: 0;
+  color: var(--text-muted);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#user-modal .modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#user-modal .modal-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+#user-modal .modal-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: -4px;
+}
+
+#user-modal .input {
+  width: 100%;
+  padding: 8px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-soft);
+  background: var(--bg-card-alt);
+  color: var(--text-main);
+}
+
+#user-modal .modal-check {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#user-modal .modal-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+#user-modal .modal-actions .btn {
+  flex: 1;
+}
+
+#user-modal .btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border: 1px solid var(--accent);
+}

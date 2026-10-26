@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ix2-NG Admin Panel</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}{% if static_ver is defined %}?v={{ static_ver('favicon.svg') }}{% endif %}">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/core.css') }}{% if static_ver is defined %}?v={{ static_ver('css/core.css') }}{% endif %}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tabs/disks.css') }}{% if static_ver is defined %}?v={{ static_ver('css/tabs/disks.css') }}{% endif %}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tabs/users.css') }}{% if static_ver is defined %}?v={{ static_ver('css/tabs/users.css') }}{% endif %}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tabs/services.css') }}{% if static_ver is defined %}?v={{ static_ver('css/tabs/services.css') }}{% endif %}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tabs/backups.css') }}{% if static_ver is defined %}?v={{ static_ver('css/tabs/backups.css') }}{% endif %}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tabs/logs.css') }}{% if static_ver is defined %}?v={{ static_ver('css/tabs/logs.css') }}{% endif %}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tabs/updates.css') }}{% if static_ver is defined %}?v={{ static_ver('css/tabs/updates.css') }}{% endif %}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tabs/groups.css') }}{% if static_ver is defined %}?v={{ static_ver('css/tabs/groups.css') }}{% endif %}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tabs/shares.css') }}{% if static_ver is defined %}?v={{ static_ver('css/tabs/shares.css') }}{% endif %}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tabs/red.css') }}{% if static_ver is defined %}?v={{ static_ver('css/tabs/red.css') }}{% endif %}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tabs/wireguard.css') }}{% if static_ver is defined %}?v={{ static_ver('css/tabs/wireguard.css') }}{% endif %}">
+    {% if session.get('role') == 'admin' %}
+    <!-- xterm.css/xterm.js se cargan bajo demanda desde terminal.js (pesan ~290KB
+         y solo hacen falta si de verdad se abre la pestana Terminal). -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tabs/terminal.css') }}{% if static_ver is defined %}?v={{ static_ver('css/tabs/terminal.css') }}{% endif %}">
+    {% endif %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/polish.css') }}{% if static_ver is defined %}?v={{ static_ver('css/polish.css') }}{% endif %}">
+</head>
+
+<body data-role="{{ session.get('role') or 'viewer' }}">
+
+    <header class="topbar">
+        <div class="logo">ix2-NG</div>
+
+        {% if session.get('logged_in') %}
+        <nav class="tabs">
+            <a class="active" data-tab="estado">Estado</a>
+            <a data-tab="disks">Discos</a>
+            {% if session.get('role') != 'viewer' %}<a data-tab="compartidas">Compartidas</a>{% endif %}
+            {% if session.get('role') != 'viewer' %}<a data-tab="usuarios">Usuarios</a>{% endif %}
+            {% if session.get('role') != 'viewer' %}<a data-tab="grupos">Grupos</a>{% endif %}
+            <a data-tab="procesos">Procesos</a>
+            <a data-tab="red">Red</a>
+            <a data-tab="servicios">Servicios</a>
+            <a data-tab="backups">Backups</a>
+            {% if session.get('role') != 'viewer' %}<a data-tab="wireguard">VPN</a>{% endif %}
+            {% if session.get('role') != 'viewer' %}<a data-tab="logs">Logs</a>{% endif %}
+            <a data-tab="updates">Sistema</a>
+            {% if session.get('role') == 'admin' %}
+            <a data-tab="terminal">Terminal</a>
+            {% endif %}
+        </nav>
+        <div class="topbar-user">
+            <!-- <span class="topbar-reminder">Si algo no carga tras actualizar, pulsa Ctrl+F5</span> -->
+            <span class="topbar-user-name">{{ session.get('username','') }}</span>
+            <a class="topbar-user-logout" href="/logout">Salir</a>
+        </div>
+        {% else %}
+        <div class="topbar-user">
+            <a class="topbar-user-logout" href="/login">Entrar</a>
+        </div>
+        {% endif %}
+    </header>
+
+    <main class="content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- JS AL FINAL -->
+    <script src="{{ url_for('static', filename='js/role.js') }}{% if static_ver is defined %}?v={{ static_ver('js/role.js') }}{% endif %}"></script>
+    <script src="{{ url_for('static', filename='js/path_tree.js') }}{% if static_ver is defined %}?v={{ static_ver('js/path_tree.js') }}{% endif %}"></script>
+    <script src="{{ url_for('static', filename='js/core.js') }}{% if static_ver is defined %}?v={{ static_ver('js/core.js') }}{% endif %}"></script>
+    <script src="{{ url_for('static', filename='js/tabs/disks.js') }}{% if static_ver is defined %}?v={{ static_ver('js/tabs/disks.js') }}{% endif %}"></script>
+    <script src="{{ url_for('static', filename='js/tabs/users.js') }}{% if static_ver is defined %}?v={{ static_ver('js/tabs/users.js') }}{% endif %}"></script>
+    <script src="{{ url_for('static', filename='js/tabs/groups.js') }}{% if static_ver is defined %}?v={{ static_ver('js/tabs/groups.js') }}{% endif %}"></script>
+    <script src="{{ url_for('static', filename='js/tabs/shares.js') }}{% if static_ver is defined %}?v={{ static_ver('js/tabs/shares.js') }}{% endif %}"></script>
+    <script src="{{ url_for('static', filename='js/tabs/logs.js') }}{% if static_ver is defined %}?v={{ static_ver('js/tabs/logs.js') }}{% endif %}"></script>
+    <script src="{{ url_for('static', filename='js/tabs/backups.js') }}{% if static_ver is defined %}?v={{ static_ver('js/tabs/backups.js') }}{% endif %}"></script>
+    <script src="{{ url_for('static', filename='js/tabs/red.js') }}{% if static_ver is defined %}?v={{ static_ver('js/tabs/red.js') }}{% endif %}"></script>
+    <script src="{{ url_for('static', filename='js/tabs/updates.js') }}{% if static_ver is defined %}?v={{ static_ver('js/tabs/updates.js') }}{% endif %}"></script>
+    <script src="{{ url_for('static', filename='js/tabs/wireguard.js') }}{% if static_ver is defined %}?v={{ static_ver('js/tabs/wireguard.js') }}{% endif %}"></script>
+    {% if session.get('role') == 'admin' %}
+    <script src="{{ url_for('static', filename='js/tabs/terminal.js') }}{% if static_ver is defined %}?v={{ static_ver('js/tabs/terminal.js') }}{% endif %}"></script>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/polish.js') }}{% if static_ver is defined %}?v={{ static_ver('js/polish.js') }}{% endif %}"></script>
+
+</body>
+
+</html>

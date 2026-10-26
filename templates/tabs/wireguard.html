@@ -1,0 +1,139 @@
+<!-- =====================================================
+     TAB WIREGUARD
+     ===================================================== -->
+
+<div class="wireguard-layout two-column-layout">
+  <div class="wireguard-left thin-scroll">
+    <div class="card-group">
+      <h2>WireGuard VPN</h2>
+
+      <!-- STATUS -->
+      <div class="card backup-status" id="wg-status-card">
+        <div class="backup-row">
+          <span class="label">Estado</span>
+          <span class="value" id="wg-status-val"><span class="status warn"></span> Sin datos</span>
+        </div>
+        <div class="backup-row">
+          <span class="label">Endpoint</span>
+          <span class="value" id="wg-endpoint-val">-</span>
+        </div>
+        <div class="backup-row">
+          <span class="label">Clave publica servidor</span>
+          <span class="value monospace small" id="wg-pubkey-val">-</span>
+        </div>
+        <div class="backup-row">
+          <span class="label">Peers conectados</span>
+          <span class="value" id="wg-peers-count">-</span>
+        </div>
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="card">
+        <div class="panel-section">
+          <div class="panel-actions">
+            <button id="wg-start-btn"  class="btn btn-block" type="button">Activar VPN</button>
+            <button id="wg-stop-btn"   class="btn btn-block btn-danger" type="button">Desactivar VPN</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PEERS LIST -->
+      <div class="card">
+        <div class="panel-section">
+          <div class="list-header">
+            <h3>Peers / Dispositivos</h3>
+          </div>
+          <div class="processes-list thin-scroll" id="wg-peers-list"></div>
+          <button id="wg-add-peer-btn" class="btn btn-block btn-new-job" type="button">+ Nuevo dispositivo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <aside class="card-group side-panel panel-scroll" id="wg-side-panel">
+
+    <!-- INIT SERVER (shown when not initialized) -->
+    <div id="wg-init-section">
+      <div class="panel-header">
+        <div class="panel-title">Configuracion inicial</div>
+        <div class="panel-subtitle">Configura el servidor WireGuard</div>
+      </div>
+      <div class="panel-section">
+        <h3>Endpoint publico</h3>
+        <div class="panel-info">
+          <label>Host:Puerto
+            <input id="wg-init-endpoint" type="text" placeholder="tu-dominio.ddns.net:51820" />
+          </label>
+        </div>
+      </div>
+      <div class="panel-section">
+        <div class="panel-actions">
+          <button id="wg-init-btn" class="btn btn-block" type="button">Inicializar servidor</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PEER EDITOR (shown when editing or adding a peer) -->
+    <div id="wg-peer-section" class="hidden">
+      <div class="panel-header">
+        <div class="panel-title" id="wg-peer-panel-title">Nuevo dispositivo</div>
+        <div class="panel-subtitle" id="wg-peer-panel-subtitle">Configura el peer</div>
+      </div>
+
+      <div class="panel-section">
+        <h3>Nombre</h3>
+        <div class="panel-info">
+          <label>Nombre del dispositivo
+            <input id="wg-peer-name" type="text" placeholder="Mi portatil" />
+          </label>
+        </div>
+      </div>
+
+      <!-- Config download (shown after peer created) -->
+      <div id="wg-peer-conf-section" class="panel-section hidden">
+        <h3>Configuracion generada</h3>
+        <div class="panel-info">
+          <div id="wg-peer-qr" class="wg-qr-wrap hidden"></div>
+          <div class="wg-conf-box thin-scroll">
+            <pre id="wg-peer-conf-text"></pre>
+          </div>
+          <div class="panel-actions">
+            <button id="wg-peer-conf-download" class="btn btn-block" type="button">Descargar .conf</button>
+            <button id="wg-peer-conf-copy"     class="btn btn-block btn-secondary" type="button">Copiar al portapapeles</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="panel-actions">
+          <button id="wg-peer-save-btn"   class="btn btn-block" type="button">Crear dispositivo</button>
+          <button id="wg-peer-delete-btn" class="btn btn-block btn-danger hidden" type="button">Eliminar</button>
+          <button id="wg-peer-cancel-btn" class="btn btn-block btn-secondary" type="button">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVER SETTINGS (shown by default when initialized) -->
+    <div id="wg-server-section" class="hidden">
+      <div class="panel-header">
+        <div class="panel-title">Servidor VPN</div>
+        <div class="panel-subtitle">Ajustes del servidor WireGuard</div>
+      </div>
+      <div class="panel-section">
+        <h3>Endpoint</h3>
+        <div class="panel-info">
+          <label>Host:Puerto
+            <input id="wg-server-endpoint" type="text" placeholder="tu-dominio.ddns.net:51820" />
+          </label>
+        </div>
+      </div>
+      <div class="panel-section">
+        <div class="panel-actions">
+          <button id="wg-server-save-btn" class="btn btn-block" type="button">Guardar endpoint</button>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+</div>

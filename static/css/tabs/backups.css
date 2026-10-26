@@ -1,0 +1,389 @@
+/* =====================================================
+   BACKUPS TAB
+   ===================================================== */
+
+#tab-backups #backup-jobs-list .process-item {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+#tab-backups .backup-job-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  min-width: 0;
+  gap: 0;
+}
+
+#tab-backups .backup-progress-bar {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+@keyframes backup-slide {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(400%); }
+}
+
+#tab-backups .backup-progress-fill {
+  width: 25%;
+  height: 100%;
+  background: var(--accent, #4f8cff);
+  border-radius: 2px;
+  animation: backup-slide 1.4s ease-in-out infinite;
+}
+
+#tab-backups .backup-current-line {
+  min-width: 0;
+  max-width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  padding-left: 10px;
+  opacity: 0.8;
+}
+
+#tab-backups .backup-job-row .process-name {
+  flex: none;
+}
+
+#tab-backups .backup-job-row .process-stats {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+#tab-backups .backup-progress-box {
+  margin-top: 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+#tab-backups .backup-progress-title {
+  background: var(--card-header-bg, var(--header-bg));
+  padding: 5px 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: .03em;
+}
+
+#tab-backups .backup-progress-out {
+  background: #0d1117;
+  color: #7ee787;
+  font-family: monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  padding: 8px 12px;
+  margin: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+#tab-backups .backups-left {
+  padding-right: 6px;
+}
+
+#tab-backups .backup-status {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#tab-backups .backup-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+#tab-backups .backup-row .label {
+  color: var(--text-muted);
+}
+
+#tab-backups .list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+#tab-backups #backup-jobs-list,
+#tab-backups #backup-tasks,
+#tab-backups .mounts-list {
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+#tab-backups #backup-jobs-list .process-item {
+  cursor: pointer;
+}
+
+#tab-backups #backup-jobs-list .process-item.active {
+  border-left: 3px solid var(--accent);
+  padding-left: 9px;
+  background: rgba(79, 140, 255, 0.13);
+}
+
+/* Checkbox inline (Activar backup) */
+#tab-backups .label-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+#tab-backups .label-inline input[type="checkbox"] {
+  width: auto;
+  margin-top: 0;
+  flex-shrink: 0;
+}
+
+/* Botón Nuevo debajo de la lista */
+#tab-backups .btn-new-job {
+  margin-top: 8px;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+#tab-backups .btn-new-job:hover {
+  background: rgba(79, 140, 255, 0.15);
+}
+
+/* Path picker con dropdown */
+#tab-backups .path-picker-wrap {
+  position: relative;
+}
+
+#tab-backups .path-picker {
+  display: flex;
+  gap: 6px;
+}
+
+#tab-backups .path-picker input {
+  flex: 1;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-soft);
+  color: var(--text-main);
+  padding: 6px;
+  border-radius: var(--radius);
+}
+
+#tab-backups .path-dropdown {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background: var(--bg-card);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+#tab-backups .path-dropdown.hidden {
+  display: none;
+}
+
+#tab-backups .path-dropdown .path-shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border-soft);
+  margin-top: 0;
+}
+
+#tab-backups .path-dropdown .path-browser {
+  margin-top: 0;
+  border: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  background: var(--bg-card-alt);
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+/* Estilos originales (fuera del dropdown, por si se usan en otro contexto) */
+#tab-backups .path-browser {
+  margin-top: 8px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  background: var(--bg-card-alt);
+  max-height: 190px;
+  overflow-y: auto;
+}
+
+#tab-backups .path-shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+#tab-backups .path-chip {
+  background: var(--bg-section);
+  border: 1px solid var(--border-soft);
+  color: var(--text-muted);
+  border-radius: 999px;
+  font-size: 12px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+#tab-backups .path-chip:hover {
+  color: var(--text-main);
+  border-color: var(--accent);
+}
+
+#tab-backups .path-chip.active {
+  color: #fff;
+  border-color: var(--accent);
+  background: rgba(79, 140, 255, 0.18);
+}
+
+#tab-backups .path-item {
+  padding: 7px 8px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+#tab-backups .path-item:hover {
+  background: var(--bg-top);
+}
+
+#tab-backups .path-item .hint {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+#tab-backups .schedule-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--gap-sm);
+}
+
+#tab-backups .schedule-grid input,
+#tab-backups .schedule-grid select,
+#tab-backups .panel-info input {
+  margin-top: 4px;
+  width: 100%;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-soft);
+  color: var(--text-main);
+  padding: 6px;
+  border-radius: var(--radius);
+}
+
+#tab-backups .mount-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap-sm);
+}
+
+#tab-backups .btn-small {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+#tab-backups .btn-danger {
+  border-color: #8f3844;
+  color: #f6c9ce;
+}
+
+#tab-backups .btn-danger:hover {
+  background: rgba(170, 62, 76, 0.2);
+}
+
+/* Comandos OpenSSH — clic para copiar */
+#tab-backups .openssh-cmd {
+  cursor: pointer;
+  user-select: all;
+  margin: 0;
+}
+
+#tab-backups .openssh-cmd:hover {
+  outline: 1px solid var(--accent);
+}
+
+/* Árbol de directorios */
+#tab-backups .tree-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 4px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-soft);
+  font-size: 13px;
+}
+
+#tab-backups .tree-row:hover { background: var(--bg-top); }
+#tab-backups .tree-row.tree-sel { background: rgba(79, 140, 255, 0.15); }
+
+#tab-backups .tree-arr {
+  color: var(--text-muted);
+  font-size: 12px;
+  user-select: none;
+  flex-shrink: 0;
+  width: 14px;
+  text-align: center;
+}
+
+#tab-backups .tree-arr:hover { color: var(--accent); }
+
+#tab-backups .tree-lbl { flex: 1; }
+
+#tab-backups .tree-hint {
+  color: var(--text-muted);
+  font-size: 12px;
+  cursor: default;
+}
+
+
+/* Panel derecho mas ancho */
+.backups-layout.two-column-layout {
+  grid-template-columns: 1fr 390px;
+}
+
+/* --- tree-item (PathTreeUI.createLazyBrowser) en browsers de backups --- */
+#tab-backups .tree-item {
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 8px; border-radius: 4px;
+  cursor: pointer; user-select: none; font-size: 13px; color: var(--text);
+}
+#tab-backups .tree-item:hover { background: rgba(79,140,255,0.12); }
+#tab-backups .tree-item.active { background: rgba(79,140,255,0.22); }
+#tab-backups .tree-folder-icon { width: 16px; text-align: center; flex-shrink: 0; }
+#tab-backups .tree-caret { width: 12px; text-align: center; flex-shrink: 0; cursor: pointer; }
+#tab-backups .tree-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Editor de backup bloqueado hasta pulsar "Editar" */
+.backup-fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.backup-fieldset[disabled] .path-browser {
+  pointer-events: none;
+  opacity: 0.6;
+}
+.backup-fieldset[disabled] input,
+.backup-fieldset[disabled] select,
+.backup-fieldset[disabled] textarea {
+  opacity: 0.75;
+  cursor: not-allowed;
+}

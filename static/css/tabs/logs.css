@@ -1,0 +1,58 @@
+/* =====================================================
+   LOGS TAB
+   ===================================================== */
+
+#tab-logs .log-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  margin-bottom: var(--gap-sm);
+}
+
+#tab-logs .btn-filter {
+  font-size: 12px;
+  padding: 4px 8px;
+  border: 1px solid var(--border-soft);
+}
+
+#tab-logs .btn-filter.active {
+  background: var(--bg-top);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+#tab-logs .logs-panel {
+  height: calc(100vh - 200px);
+  display: flex;
+}
+
+#tab-logs .log-search {
+  margin-left: auto;
+  flex: 1;
+}
+
+#tab-logs .log-search input {
+  width: 100%;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-soft);
+  color: var(--text-main);
+  padding: 6px 8px;
+  border-radius: var(--radius);
+}
+
+#tab-logs .log-list .process-item:not(.active) {
+  background: var(--bg-section);
+}
+
+#tab-logs .log-list {
+  flex: 1;
+  max-height: none;
+}
+
+#tab-logs .log-list .process-item.error .process-name {
+  color: var(--err);
+}
+
+#tab-logs .log-list .process-item.service .process-name {
+  color: var(--accent);
+}

@@ -1,0 +1,129 @@
+<div class="disks-layout two-column-layout">
+
+  <!-- LISTA DE DISCOS / PARTICIONES -->
+  <div class="disks-left thin-scroll">
+    <div class="card-group">
+      <h2>Discos</h2>
+      <!-- LEYENDA -->
+      <div class="disk-legend">
+        <span class="legend-item system">Sistema</span>
+        <span class="legend-item data">Datos</span>
+        <span class="legend-item efi">EFI</span>
+        <span class="legend-item rec">Recuperación</span>
+        <span class="legend-item usb">USB</span>
+      </div>
+
+      <!-- DETALLE DE DISCOS -->
+      <!-- <div class="disks-list"> -->
+        <div id="disks-detail"></div>
+      <!-- </div> -->
+
+      <!-- TEST LARGO SMART PROGRAMADO -->
+      <div class="panel-section" id="smart-test-section">
+        <h3>Test SMART programado</h3>
+        <div class="panel-info">
+          <div class="muted">
+            El test largo recorre toda la superficie del disco y detecta sectores
+            defectuosos antes de que den problemas. Tarda un par de horas y se
+            ejecuta en segundo plano, sin afectar al uso del NAS.
+          </div>
+
+          <label class="label-inline">
+            <input type="checkbox" id="smart-sched-enabled" /> Ejecutar cada semana
+          </label>
+
+          <div class="smart-sched-row">
+            <label for="smart-sched-weekday">Día</label>
+            <select id="smart-sched-weekday">
+              <option value="0">Lunes</option>
+              <option value="1">Martes</option>
+              <option value="2">Miércoles</option>
+              <option value="3">Jueves</option>
+              <option value="4">Viernes</option>
+              <option value="5">Sábado</option>
+              <option value="6">Domingo</option>
+            </select>
+            <label for="smart-sched-time">Hora</label>
+            <input type="time" id="smart-sched-time" value="10:00" />
+            <button class="btn" id="smart-sched-save" type="button">Guardar</button>
+          </div>
+
+          <div class="muted" id="smart-sched-hint">
+            Elige una hora en la que el NAS esté encendido. Si aun así se pasa la
+            hora con el NAS apagado, el test se lanzará al encenderlo.
+          </div>
+
+          <div id="smart-sched-status"></div>
+
+          <div class="smart-sched-row">
+            <button class="btn btn-secondary" id="smart-test-now" type="button">
+              Ejecutar test ahora
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <aside id="partition-panel" class="side-panel panel-scroll hidden">
+
+    <!--PANEL LATERAL CONTEXTO -->
+    <div class="panel-header">
+      <div class="panel-title">Partición</div>
+      <div class="panel-subtitle" id="panel-partition-name">
+        Selecciona una partición
+      </div>
+
+      <div class="panel-bar">
+        <div class="fill data" style="width:0%"></div>
+      </div>
+
+      <div class="panel-usage" id="panel-partition-usage">
+        —
+      </div>
+    </div>
+
+
+    <!-- INFORMACIÓN -->
+    <div class="panel-section">
+      <h3>Información</h3>
+      <div id="partition-info" class="panel-info">
+        <div class="muted">Sin selección</div>
+      </div>
+    </div>
+
+
+    <div class="panel-section">
+      <h3>Carpetas</h3>
+      <div class="panel-info">
+        <div class="folder-breadcrumb" id="disk-folder-breadcrumb">-</div>
+        <div class="disk-folder-box thin-scroll">
+          <div class="folder-tree" id="disk-folder-tree"></div>
+        </div>
+        <div class="folder-actions" id="disk-folder-actions">
+          <button class="btn btn-secondary" id="disk-folder-new-btn" type="button">Nueva carpeta</button>
+          <button class="btn btn-danger" id="disk-folder-delete-btn" type="button">Eliminar carpeta actual</button>
+        </div>
+        <div class="folder-create hidden" id="disk-folder-create">
+          <input id="disk-folder-name" type="text" maxlength="64" placeholder="Nombre de carpeta" />
+          <div class="folder-create-actions">
+            <button class="btn" id="disk-folder-create-confirm" type="button">Crear</button>
+            <button class="btn btn-secondary" id="disk-folder-create-cancel" type="button">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SMART -->
+    <div class=panel-section id=smart-section style=display:none>
+      <h3>Salud del disco (SMART)</h3>
+      <div id=smart-info class=panel-info>
+        <div class=muted>Cargando...</div>
+      </div>
+    </div>
+    </div>
+  </aside>
+
+</div>

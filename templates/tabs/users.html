@@ -1,0 +1,138 @@
+<!-- =====================================================
+     TAB USUARIOS
+     ===================================================== -->
+
+<div class="users-layout two-column-layout">
+
+  <!-- COLUMNA IZQUIERDA -->
+  <div class="users-left">
+
+    <div class="card-group">
+      <h2>Usuarios</h2>
+
+      <div class="users-box">
+      <div id="users-list" class="users-list list-compact"></div>
+      </div>
+
+
+      {% if session.get('role') == 'admin' %}
+      <div class="users-actions">
+        <button id="btn-new-user" class="btn btn-block">Nuevo usuario</button>
+      </div>
+      {% endif %}
+    </div>
+
+  </div>
+
+  <!-- PANEL DERECHO -->
+  <aside id="user-panel" class="card-group side-panel panel-scroll hidden">
+    <div class="panel-header">
+      <div class="panel-title">Usuario</div>
+      <div class="panel-subtitle" id="panel-user-name"></div>
+    </div>
+
+    <!-- 1️⃣ Identidad del usuario -->
+    <div class="panel-section">
+      <h3>Identidad</h3>
+      <div class="panel-info">
+        <div><strong>Usuario:</strong> <span id="user-name">—</span></div>
+        <div><strong>UID:</strong> <span id="user-uid">—</span></div>
+        <div><strong>Tipo:</strong> <span id="user-type">—</span></div>
+      </div>
+    </div>
+
+    <!-- 2️⃣ Directorio personal (HOME) -->
+    <div class="panel-section">
+      <h3>Directorio personal</h3>
+      <div class="panel-info mono">
+        <div id="user-home">/home/user</div>
+        <div class="status-line">
+          <span class="status ok"></span>
+          <span>Disponible</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3️⃣ Grupos (principal + secundarios) -->
+    <div class="panel-section">
+      <h3>Grupos</h3>
+      <div class="groups-block" id="user-groups"></div>
+    </div>
+
+    <!-- 4️⃣ Acceso y seguridad -->
+    <div class="panel-section">
+      <h3>Acceso y seguridad</h3>
+      <div class="panel-info">
+        <div><strong>Estado:</strong> <span id="user-state">Activo</span></div>
+        <div><strong>Último acceso:</strong> <span id="user-last-login">—</span></div>
+        <div><strong>SSH:</strong> <span id="user-ssh">—</span></div>
+      </div>
+    </div>
+
+
+    {% if session.get('role') == 'admin' %}
+    <div class="panel-section">
+      <h3>Acciones</h3>
+      <div class="panel-info">
+        <div class="users-actions">
+          <button id="btn-edit-user" class="btn">Modificar</button>
+          <button id="btn-delete-user" class="btn btn-danger" data-action="user-delete-open">Eliminar</button>
+        </div>
+        <div class="delete-options hidden" id="user-delete-options">
+          <label class="checkline">
+            <input id="delete-opt-home" type="checkbox" checked />
+            Eliminar HOME del usuario
+          </label>
+          <label class="checkline">
+            <input id="delete-opt-shares" type="checkbox" checked />
+            Eliminar shares personales
+          </label>
+          <label class="checkline">
+            <input id="delete-opt-share-paths" type="checkbox" checked />
+            Eliminar carpetas fisicas de esos shares
+          </label>
+          <div class="delete-options-actions">
+            <button id="btn-delete-user-cancel" class="btn" type="button" data-action="user-delete-cancel">Cancelar</button>
+            <button id="btn-delete-user-confirm" class="btn btn-danger" type="button" data-action="user-delete-confirm">Confirmar borrado</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </aside>
+
+</div>
+{% if session.get('role') == 'admin' %}
+<div id="user-modal" class="modal hidden">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title" id="user-modal-title">Nuevo usuario</div>
+      <button class="modal-close" id="user-modal-close">x</button>
+    </div>
+    <div class="modal-body">
+      <label class="modal-label" for="user-form-name">Usuario</label>
+      <input id="user-form-name" class="input" type="text" placeholder="usuario"
+             title="Solo minusculas, numeros, '_' o '-'. Debe empezar por letra o '_' (maximo 32 caracteres)." />
+      <div class="modal-hint">Solo minusculas: letras, numeros, "_" o "-". No puede empezar por numero.</div>
+
+      <label class="modal-label" for="user-form-pass">Contrasena</label>
+      <input id="user-form-pass" class="input" type="password" placeholder="opcional" />
+
+      <label class="modal-label" for="user-form-groups">Grupos (separados por coma)</label>
+      <input id="user-form-groups" class="input" type="text" placeholder="users,media" />
+
+      <label class="modal-check">
+      <input id="user-form-admin" type="checkbox" /> Administrador
+      </label>
+
+      <label class="modal-check">
+      <input id="user-form-active" type="checkbox" checked /> Activo
+      </label>
+    </div>
+    <div class="modal-actions">
+      <button id="user-form-cancel" class="btn">Cancelar</button>
+      <button id="user-form-save" class="btn btn-primary">Guardar</button>
+    </div>
+  </div>
+</div>
+{% endif %}

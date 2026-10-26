@@ -1,0 +1,105 @@
+<div class="shares-layout two-column-layout">
+  <div class="shares-left">
+    <div class="card-group">
+      <h2>Compartidas SMB</h2>
+
+      <div class="shares-box thin-scroll">
+        <input id="share-filter" type="text" placeholder="Filtrar compartidas" />
+        <div id="shares-list" class="shares-list list-compact"></div>
+      </div>
+
+      <div class="shares-actions">
+        <button id="share-new" class="btn btn-block">Nuevo share</button>
+        <button id="share-modify" class="btn btn-block hidden">Modificar</button>
+        <button id="share-reload" class="btn btn-block">Recargar Samba</button>
+      </div>
+    </div>
+  </div>
+
+  <aside id="share-panel" class="card-group side-panel panel-scroll hidden">
+    <div class="panel-header">
+      <div class="panel-title">Share:</div>
+      <div class="panel-subtitle" id="panel-share-name">Selecciona un share</div>
+    </div>
+
+    <div class="panel-section">
+      <h3>Compartida con</h3>
+      <div id="share-access-summary" class="share-access-list"></div>
+    </div>
+
+    <!-- Modo vista: solo lectura, es lo que se ve al seleccionar un share -->
+    <div id="share-view-fields" class="panel-section hidden">
+      <h3>Configuracion</h3>
+      <div class="panel-info">
+        <div class="field-row"><span class="field-label">Nombre</span> <span id="share-view-name">-</span></div>
+        <div class="field-row"><span class="field-label">Ruta</span> <span id="share-view-path">-</span></div>
+        <div class="field-row"><span class="field-label">Solo lectura</span> <span id="share-view-readonly">-</span></div>
+      </div>
+    </div>
+
+    <!-- Modo edicion: solo visible al pulsar "Modificar" o "Nuevo share" -->
+    <div id="share-edit-fields" class="hidden">
+      <div class="panel-section">
+        <h3>Configuracion</h3>
+        <div class="panel-info">
+          <label class="field-row">
+            <span class="field-label">Nombre</span>
+            <input id="share-name" type="text" placeholder="datos_nuevo" />
+          </label>
+          <label class="field-row">
+            <span class="field-label">Ruta</span>
+            <input id="share-path" type="text" placeholder="/data1/compartido" />
+          </label>
+          <label class="checkline">
+            <input id="share-read-only" type="checkbox" />
+            Solo lectura
+          </label>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <h3>Permisos</h3>
+        <div class="panel-info">
+          <label class="field-row">
+            <span class="field-label">Usuarios</span>
+            <input id="share-users" type="text" placeholder="jordi, operador" />
+          </label>
+          <label class="field-row">
+            <span class="field-label">Grupos</span>
+            <input id="share-groups" type="text" placeholder="users, staff" />
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <h3>Ubicacion</h3>
+      <div id="share-path-crumb" class="folder-breadcrumb"></div>
+      <div id="share-path-tree" class="share-path-tree" aria-label="Arbol de rutas"></div>
+      <div id="share-path-actions" class="panel-mini-actions hidden">
+        <button id="share-path-refresh" class="btn btn-block" type="button">Actualizar carpeta</button>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <h3>Origen</h3>
+      <div class="panel-hint">De donde viene esta compartida y si se puede editar desde aqui.</div>
+      <div class="panel-info">
+        <div class="field-row">
+          <span class="field-label">Tipo</span> <span id="share-source">-</span>
+          <span class="field-sep">|</span>
+          <span class="field-label">Editable</span> <span id="share-editable">-</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <h3>Acciones</h3>
+      <div class="panel-actions">
+        <button id="share-save" class="btn btn-block hidden">Guardar</button>
+        <button id="share-cancel-edit" class="btn btn-block hidden">Cancelar</button>
+        <button id="share-delete" class="btn btn-block">Eliminar</button>
+      </div>
+    </div>
+  </aside>
+</div>

@@ -1,0 +1,241 @@
+#tab-compartidas .shares-left {
+  align-self: start;
+}
+
+/* Panel derecho mas ancho que el resto de pestanas (solo aqui, no toca
+   el .two-column-layout global que usan otras pestanas). */
+#tab-compartidas .shares-layout {
+  grid-template-columns: 1fr 480px;
+}
+
+#tab-compartidas #share-panel .field-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#tab-compartidas #share-panel .field-row .field-label {
+  flex: 0 0 auto;
+  min-width: 70px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+#tab-compartidas #share-panel .field-row input[type="text"] {
+  flex: 1;
+  min-width: 0;
+  margin-top: 0;
+}
+
+#tab-compartidas #share-panel .panel-header {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+#tab-compartidas #share-panel .panel-hint {
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+#tab-compartidas #share-panel .field-sep {
+  color: var(--border-soft);
+  margin: 0 2px;
+}
+
+#tab-compartidas .shares-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 4px;
+  max-height: calc(100vh - 220px);
+  overflow-y: auto;
+}
+
+#tab-compartidas #share-filter {
+  width: 100%;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-soft);
+  color: var(--text-main);
+  padding: 6px;
+  border-radius: var(--radius);
+  margin-bottom: 6px;
+}
+
+#tab-compartidas .share-row {
+  display: grid;
+  grid-template-columns: 180px 1fr 90px;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+}
+
+#tab-compartidas .share-name {
+  font-weight: 600;
+}
+
+#tab-compartidas .share-path {
+  color: var(--text-muted);
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#tab-compartidas .share-source {
+  text-align: right;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+#tab-compartidas .shares-actions {
+  margin-top: var(--gap-sm);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+#tab-compartidas .shares-actions .btn-block {
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 90px;
+}
+
+#tab-compartidas #share-panel {
+  overflow-y: auto;
+  background: var(--bg-section);
+  max-height: calc(100vh - 120px);
+}
+
+#tab-compartidas #share-panel input[type="text"] {
+  width: 100%;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-soft);
+  color: var(--text-main);
+  padding: 6px;
+  border-radius: var(--radius);
+  margin-top: 4px;
+}
+
+#tab-compartidas .folder-breadcrumb {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+#tab-compartidas .folder-breadcrumb .crumb {
+  margin-right: 4px;
+  cursor: pointer;
+}
+
+#tab-compartidas .folder-breadcrumb .crumb:hover {
+  color: var(--text-main);
+}
+
+#tab-compartidas .share-path-tree {
+  width: 100%;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-soft);
+  color: var(--text-main);
+  border-radius: var(--radius);
+  margin-top: 4px;
+  padding: 4px 0;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+#tab-compartidas .share-path-tree .tree-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+#tab-compartidas .share-path-tree .tree-item:hover {
+  background: rgba(79, 140, 255, 0.12);
+}
+
+#tab-compartidas .share-path-tree .tree-item.active {
+  background: rgba(79, 140, 255, 0.22);
+}
+
+/* Modo vista: el arbol solo indica donde esta el share, sin poder navegar.
+   Se desbloquea al Modificar o crear un share nuevo. Ojo: pointer-events:none
+   va solo en las filas (.tree-item), NUNCA en el contenedor .share-path-tree
+   -- si no, tambien se bloquea la rueda del raton y no se puede hacer scroll. */
+#tab-compartidas .share-path-tree.locked {
+  opacity: 0.75;
+}
+
+#tab-compartidas .share-path-tree.locked .tree-item {
+  pointer-events: none;
+}
+
+#tab-compartidas .share-path-tree.locked .tree-caret {
+  visibility: hidden;
+}
+
+#tab-compartidas .folder-breadcrumb.locked .crumb {
+  cursor: default;
+  pointer-events: none;
+}
+
+#tab-compartidas .share-path-tree .tree-folder-icon {
+  width: 16px;
+  text-align: center;
+  opacity: 0.9;
+}
+
+#tab-compartidas .share-path-tree .tree-caret {
+  width: 12px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+#tab-compartidas .share-path-tree .tree-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#tab-compartidas #share-panel .checkline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+#tab-compartidas #share-panel .panel-mini-actions {
+  margin-top: 8px;
+}
+
+#tab-compartidas .share-access-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+#tab-compartidas .share-access-empty {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+#tab-compartidas .share-access-chip {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: rgba(79, 140, 255, 0.18);
+  border: 1px solid rgba(79, 140, 255, 0.4);
+  color: var(--text-main);
+}
+
+#tab-compartidas .share-access-chip.via-group {
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-soft);
+  color: var(--text-muted);
+}

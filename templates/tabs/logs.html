@@ -1,0 +1,45 @@
+<!-- =====================================================
+     TAB LOGS
+     ===================================================== -->
+
+<div class="logs-layout two-column-layout">
+
+  <!-- COLUMNA IZQUIERDA -->
+  <div>
+    <div class="card-group">
+      <h2>Logs</h2>
+
+      <div class="log-toolbar">
+        <button class="btn btn-filter active" data-filter="all">Todos</button>
+        <button class="btn btn-filter" data-filter="error">Errores</button>
+        <button class="btn btn-filter" data-filter="service">Servicios</button>
+        <div class="log-search">
+          <input id="log-search" type="text" placeholder="Buscar en logs…" />
+        </div>
+      </div>
+
+      <div class="card logs-panel">
+        <div class="processes-list log-list" id="logs-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL DERECHO -->
+  <aside id="logs-panel" class="card-group side-panel panel-scroll">
+    <div class="panel-header">
+      <div class="panel-title">Detalle</div>
+      <div class="panel-subtitle" id="log-panel-title">Selecciona un log</div>
+    </div>
+
+    <div class="panel-section">
+      <h3>Entrada</h3>
+      <div class="panel-info">
+        <div><strong>Fecha:</strong> <span id="log-date">—</span></div>
+        <div><strong>Origen:</strong> <span id="log-source">—</span></div>
+        <div><strong>Mensaje:</strong> <span id="log-message">—</span></div>
+      </div>
+    </div>
+
+  </aside>
+
+</div>

@@ -1,0 +1,277 @@
+/* =========================================================
+   polish.css – mejoras visuales (capa por encima de core.css)
+   Para volver atrás sin git: borrar este fichero y su <link>
+   en templates/layout.html. No cambia el funcionamiento.
+   ========================================================= */
+
+:root {
+  color-scheme: dark;                 /* controles nativos (hora, select, scroll) en oscuro */
+  --danger-bg: rgba(248, 81, 73, 0.12);
+  --danger-bd: rgba(248, 81, 73, 0.55);
+  --danger-tx: #ff9b94;
+  --ok-tx: #56d364;
+  --warn-tx: #e3b341;
+  --err-tx: #ff7b72;
+}
+
+/* ---------- Accesibilidad: foco visible y menos movimiento ---------- */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.tabs a:focus-visible { outline-offset: -2px; border-radius: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Barra superior ---------- */
+.logo { border-color: var(--accent); border-radius: var(--radius); white-space: nowrap; }
+
+.tabs {
+  flex: 1 1 auto;
+  min-width: 0;                       /* permite encoger y hacer scroll en pantallas estrechas */
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tabs a { white-space: nowrap; }
+.tabs a.active { box-shadow: inset 0 -2px 0 var(--accent); }
+.topbar-user { flex-shrink: 0; }
+
+/* ---------- Indicadores de estado: no solo color (forma distinta) ---------- */
+.status.warn    { border-radius: 2px; }                         /* cuadrado */
+.status.pending { border-radius: 2px; }
+.status.err     { border-radius: 2px; transform: rotate(45deg) scale(0.88); }  /* rombo */
+
+/* ---------- Botones ---------- */
+.btn { padding: 7px 12px; transition: background 0.15s, border-color 0.15s; }
+.btn-danger {
+  background: var(--danger-bg) !important;
+  border-color: var(--danger-bd) !important;
+  color: var(--danger-tx) !important;
+}
+.btn-danger:hover {
+  background: rgba(248, 81, 73, 0.28) !important;
+  border-color: var(--err) !important;
+}
+.btn-danger:disabled { opacity: 0.5; }
+
+/* ---------- Campos de formulario coherentes con el tema oscuro ---------- */
+input[type="text"], input[type="password"], input[type="number"], input[type="time"],
+input[type="search"], select, textarea {
+  background: var(--bg-card-alt);
+  color: var(--text-main);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 6px 8px;
+  font: inherit;
+  font-size: 0.92em;
+}
+input::placeholder, textarea::placeholder { color: var(--text-muted); opacity: 0.8; }
+
+/* ---------- Estado (dashboard) ---------- */
+.dashboard-row.single { grid-template-columns: 1fr; }
+
+/* Servicios en dos columnas y sin scroll interno recortando filas */
+.dashboard-grid .services-list {
+  max-height: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+.dashboard-grid #disks-list {
+  max-height: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 18px;
+}
+
+/* Alertas: la gravedad se ve en el borde y el icono, no en todo el texto */
+.process-item.alert { border-left: 3px solid var(--ok); gap: 10px; }
+.process-item.alert.warn { border-left-color: var(--warn); color: var(--text-main); }
+.process-item.alert.err  { border-left-color: var(--err);  color: var(--text-main); }
+.process-item.alert .process-name::before { margin-right: 8px; font-weight: 700; }
+.process-item.alert.ok   .process-name::before { content: "✔"; color: var(--ok-tx); }
+.process-item.alert.warn .process-name::before { content: "▲"; color: var(--warn-tx); }
+.process-item.alert.err  .process-name::before { content: "✖"; color: var(--err-tx); }
+.process-item.alert .process-stats { color: var(--text-muted); white-space: nowrap; }
+
+/* Tarjeta de red ordenada en pares etiqueta / valor */
+.net-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px 18px;
+  padding: 4px 2px;
+}
+.net-grid .net-item { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.net-grid .net-item.wide { grid-column: span 2; }
+.net-grid .label {
+  color: var(--text-muted);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.net-grid .value { font-weight: 600; overflow-wrap: anywhere; }
+.net-grid .net-extra { font-size: 0.85em; color: var(--text-muted); font-weight: 400; }
+
+/* Estado de la red en la cabecera de su tarjeta */
+.net-state { margin-left: auto; font-size: 0.75em; font-weight: 400; color: var(--text-muted); }
+.dashboard-grid .disk-row { grid-template-columns: minmax(70px, auto) 1fr 150px; }
+
+/* Puntos de estado centrados con el texto */
+.process-stats { align-items: center; }
+.process-stats .status, .disk-label .status { vertical-align: middle; position: relative; top: -1px; }
+.net-traffic-val { font-size: 13px; white-space: nowrap; }
+
+/* Leyenda de umbrales de discos */
+.status-legend span { font-size: 0.8em; }
+
+/* ---------- Servicios: Fail2ban dentro de la columna, sin hueco ---------- */
+#tab-servicios .fail2ban-card { margin-top: var(--gap); }
+
+/* ---------- Sistema: zona peligrosa separada ---------- */
+.danger-zone {
+  border: 1px solid var(--danger-bd);
+  background: var(--danger-bg);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+}
+.danger-zone h3 { color: var(--danger-tx) !important; margin-top: 0; }
+.danger-zone .panel-actions { flex-direction: row; gap: 8px; }
+.danger-zone .panel-actions .btn { flex: 1; }
+.danger-zone .danger-note { font-size: 12px; color: var(--text-muted); margin: 0 0 8px; }
+
+/* ---------- Backups: tareas con detalle plegable ---------- */
+#backup-tasks .process-item.task { align-items: flex-start; gap: 12px; border-left: 3px solid var(--border-soft); }
+#backup-tasks .process-item.task.ok  { border-left-color: var(--ok); }
+#backup-tasks .process-item.task.err { border-left-color: var(--err); }
+#backup-tasks .task-detail {
+  min-width: 0;
+  max-width: 62%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: right;
+  color: var(--text-muted);
+  font-size: 0.85em;
+}
+#backup-tasks .process-item.task.long { cursor: pointer; }
+#backup-tasks .process-item.task.long .task-detail::after { content: " ▾"; color: var(--accent); }
+#backup-tasks .process-item.task.expanded { flex-direction: column; align-items: stretch; }
+#backup-tasks .process-item.task.expanded .task-detail {
+  max-width: none;
+  white-space: pre-wrap;
+  text-align: left;
+  overflow-wrap: anywhere;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 12px;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 8px;
+  border-radius: 4px;
+}
+#backup-tasks .process-item.task.expanded .task-detail::after { content: ""; }
+
+/* ---------- Logs: iconos por tipo + estado de carga ---------- */
+#logs-list .process-item.error   .process-name::before { content: "✖ "; }
+#logs-list .process-item.service .process-name::before { content: "⚙ "; }
+#logs-list .process-item .process-stats { color: var(--text-muted); }
+#logs-list .logs-empty, .list-state {
+  padding: 14px 10px;
+  color: var(--text-muted);
+  font-style: italic;
+  justify-content: center;
+}
+
+/* ---------- Grupos: filtro de grupos de sistema ---------- */
+.groups-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85em;
+  color: var(--text-muted);
+  margin: 0 0 6px;
+  cursor: pointer;
+}
+
+/* ---------- Sin hueco cuando el panel lateral esta oculto ---------- */
+.two-column-layout:has(> .side-panel.hidden) { grid-template-columns: 1fr !important; }
+
+/* ---------- Compartidas: origen como etiqueta ---------- */
+.share-source {
+  justify-self: end;
+  align-self: center;
+  font-size: 11px;
+  padding: 2px 8px;
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  color: var(--text-muted);
+}
+
+/* ---------- Indicador de carga del dashboard ---------- */
+.ix2-loadbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  z-index: 9998;
+  overflow: hidden;
+  background: transparent;
+  transition: opacity 0.3s;
+}
+.ix2-loadbar::before {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 35%;
+  background: var(--accent);
+  border-radius: 2px;
+  animation: ix2-slide 1.2s ease-in-out infinite;
+}
+.ix2-loadbadge {
+  position: fixed;
+  top: 12px; right: 14px;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: var(--text);
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  transition: opacity 0.3s;
+}
+.ix2-loadspin {
+  width: 12px; height: 12px;
+  border: 2px solid var(--border-soft);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: ix2-spin 0.8s linear infinite;
+}
+.ix2-loadbar.ix2-done, .ix2-loadbadge.ix2-done { opacity: 0; pointer-events: none; }
+@keyframes ix2-slide { from { left: -35%; } to { left: 100%; } }
+@keyframes ix2-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .ix2-loadbar::before { animation: none; width: 100%; opacity: 0.5; }
+  .ix2-loadspin { animation: none; }
+}
+
+/* ---------- Pantallas estrechas ---------- */
+@media (max-width: 900px) {
+  .dashboard-row, .dashboard-row-3 { grid-template-columns: 1fr; }
+  .dashboard-grid .services-list, .dashboard-grid #disks-list { grid-template-columns: 1fr; }
+  .net-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .two-column-layout { grid-template-columns: 1fr; height: auto; overflow: visible; }
+  .two-column-layout > * { height: auto; overflow: visible; }
+  .content { padding-bottom: 24px; }
+  .topbar { gap: 10px; padding: 0 10px; }
+  .topbar-user-name { display: none; }
+  #backup-tasks .task-detail { max-width: 50%; }
+}

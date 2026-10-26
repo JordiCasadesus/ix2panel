@@ -1,0 +1,23 @@
+# Entorno virtual (Pesado y no portable)
+venv/
+ENV/
+
+# Basura de Python
+**/__pycache__/
+*.pyc
+
+# Archivos de sistema
+Thumbs.db
+.DS_Store
+.secret_key
+
+#Otros
+Seguridad.txt
+Traspaso_nuevo_chat.txt
+Backup_boot_NAS/
+
+# Personal / no publicar
+.claude/
+.vscode/sftp.json
+Imatges/ix2-ng_console.jpg
+Imatges/ix2-ng_CN4_zoom.png

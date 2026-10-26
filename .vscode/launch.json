@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "name": "ix2panel (Flask Dev)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "ix2panel.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "env": {
+                "FLASK_ENV": "development"
+            },
+            "args": []
+        }
+    ]
+}

@@ -1,0 +1,210 @@
+<section class="dashboard-grid">
+    <!-- FILA 1: CPU + TEMP -->
+    <div class="dashboard-row">
+
+        <div class="card-group h1">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" />
+                    <rect x="9" y="9" width="6" height="6" fill="currentColor" />
+                </svg>
+                CPU / RAM
+            </h2>
+
+            <div class="grid-inline-2">
+                <div class="card">
+                    <div class="stat">
+                        <div class="stat-header">
+                            <span>CPU</span><span id="cpu-percent">0%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar cpu" id="cpu-bar" style="width:0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="stat">
+                        <div class="stat-header">
+                            <span>RAM</span><span id="ram-info">0 / 0 MB</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar ram" id="ram-bar" style="width:0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-inline" style="margin-top:0.5rem;">
+                <span class="label">Uptime</span>
+                <span class="value" id="dash-uptime">—</span>
+            </div>
+        </div>
+
+        <div class="card-group h1">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="10" y="3" width="4" height="12" rx="2" fill="none" stroke="currentColor"
+                        stroke-width="2" />
+                    <circle cx="12" cy="18" r="3" fill="currentColor" />
+                </svg>
+                Temp / Ventilador
+            </h2>
+
+            <div class="grid-inline-2">
+                <div class="card card-inline">
+                    <span class="label">CPU Temp</span>
+                    <span class="value" id="cpu-temp">—</span>
+                </div>
+
+                <div class="card card-inline">
+                    <span class="label">Ventilador</span>
+                    <span class="value" id="fan-rpm">—</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FILA 1.5: ALERTAS + ACTUALIZACIÓN + TOP -->
+    <!-- FILA 1.5: ALERTAS + ACTUALIZACIÓN + TOP -->
+    <div class="dashboard-row-3">
+
+        <div class="card-group">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 4L4 20h16L12 4z" fill="none" stroke="currentColor" stroke-width="2" />
+                    <line x1="12" y1="9" x2="12" y2="14" stroke="currentColor" stroke-width="2" />
+                    <circle cx="12" cy="17" r="1" fill="currentColor" />
+                </svg>
+                Alertas Recientes
+            </h2>
+            <div class="card processes-info">
+                <div class="processes-list" id="alerts-list"></div>
+            </div>
+        </div>
+
+        <div class="card-group">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 12a8 8 0 1 0 2.3-5.7" fill="none" stroke="currentColor" stroke-width="2" />
+                    <polyline points="4 4 4 10 10 10" fill="none" stroke="currentColor" stroke-width="2" />
+                </svg>
+                Actualización del Sistema
+            </h2>
+            <div class="card processes-info">
+                <div class="processes-list">
+                    <div class="process-item">
+                        <span class="process-name">Firmware</span>
+                        <span class="process-stats" id="dash-fw">—</span>
+                    </div>
+                    <div class="process-item">
+                        <span class="process-name">Última revisión</span>
+                        <span class="process-stats" id="dash-upd-last">—</span>
+                    </div>
+                    <div class="process-item">
+                        <span class="process-name">Estado</span>
+                        <span class="process-stats" id="dash-upd-state">—</span>
+                    </div>
+                    <div class="process-item">
+                        <span class="process-name">Paquetes</span>
+                        <span class="process-stats" id="dash-upd-count">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-group">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="3" fill="currentColor" />
+                    <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2" />
+                </svg>
+                Top 4 Procesos
+            </h2>
+            <div class="card processes-info">
+                <div class="processes-list" id="top-processes-main"></div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <!-- FILA 2: SERVICIOS -->
+    <div class="dashboard-row">
+
+        <div class="card-group">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="3" fill="currentColor" />
+                    <path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="currentColor" stroke-width="2" />
+                </svg>
+                Servicios
+            </h2>
+            <div class="card processes-info">
+                <div class="processes-list services-list"></div>
+            </div>
+        </div>
+
+
+        <!-- ========= RED ========= -->
+        <div class="card-group">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="9" y="3" width="6" height="5" fill="currentColor" />
+                    <rect x="3" y="16" width="6" height="5" fill="currentColor" />
+                    <rect x="15" y="16" width="6" height="5" fill="currentColor" />
+                    <path d="M12 8v4M6 16v-4h12v4" fill="none" stroke="currentColor" stroke-width="2" />
+                </svg>
+                Red
+                <span class="net-state"><span class="status ok"></span> Activo</span>
+            </h2>
+
+            <div class="card">
+                <div class="net-grid">
+                    <div class="net-item"><span class="label">Interfaz</span><span class="value net-iface">—</span></div>
+                    <div class="net-item"><span class="label">IP</span><span class="value net-ip">—</span></div>
+                    <div class="net-item"><span class="label">MAC</span><span class="value net-mac">—</span></div>
+                    <div class="net-item"><span class="label">Gateway</span><span class="value net-gateway">—</span></div>
+                    <div class="net-item"><span class="label">Máscara</span><span class="value net-mask">—</span></div>
+                    <div class="net-item"><span class="label">DNS</span><span class="value net-dns">—</span></div>
+                    <div class="net-item"><span class="label">IP pública</span><span class="value net-public-ip">—</span></div>
+                    <div class="net-item"><span class="label">DDNS</span><span class="value net-ddns-host">—</span></div>
+                    <div class="net-item"><span class="label">Tráfico acumulado</span>
+                        <span class="value net-traffic-val">↓ <strong class="net-rx">0</strong> MB · ↑ <strong class="net-tx">0</strong> MB</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ============================================ DISCOS + RED -->
+    <!-- ************************************  DISCOS -->
+    <div class="dashboard-row single">
+
+        <!-- ========= DISCOS ========= -->
+        <div class="card-group">
+            <h2 class="services-header">
+                <span class="title">
+                    <!-- icono -->
+                    Discos
+                </span>
+                <div class="status-legend" title="Estado según el porcentaje de uso">
+                    <span><span class="status ok"></span> &lt; 80 %</span>
+                    <span><span class="status warn"></span> 80–90 %</span>
+                    <span><span class="status err"></span> &ge; 90 %</span>
+                </div>
+
+            </h2>
+                <div class="grid-1">
+                    <div class="card disks-info">
+                        <div class="processes-list" id="disks-list"></div>
+                    </div>
+                </div>
+        </div>
+
+    </div>
+
+</section>

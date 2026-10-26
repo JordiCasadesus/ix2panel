@@ -1,0 +1,367 @@
+<!-- =====================================================
+     TAB BACKUPS
+     ===================================================== -->
+
+<div class="backups-layout two-column-layout">
+  <div class="backups-left thin-scroll">
+    <div class="card-group">
+      <h2>Backups</h2>
+
+
+
+      <div class="card">
+        <div class="panel-section">
+          <div class="list-header">
+            <h3>Backups creados</h3>
+          </div>
+          <div class="processes-list thin-scroll" id="backup-jobs-list"></div>
+          <button id="backup-new" class="btn btn-block btn-new-job" type="button">+ Nuevo backup</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="panel-section">
+          <h3>Ultimas tareas</h3>
+          <div class="processes-list thin-scroll" id="backup-tasks"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <details id="openssh-setup">
+          <summary style="cursor:pointer;user-select:none;padding:10px 12px;">
+            <h3 style="display:inline;">OpenSSH en Windows <small style="font-weight:normal;opacity:0.6">— setup</small></h3>
+          </summary>
+          <div style="padding:4px 12px 12px">
+            <p style="font-size:12px;color:var(--text-muted);margin:6px 0 4px">1. Generar clave SSH en el NAS:</p>
+            <button id="ssh-keygen-btn" class="btn" type="button" style="margin-bottom:6px;">Generar clave en el NAS</button>
+            <div id="ssh-keygen-result" style="display:none;margin-top:4px;">
+              <pre id="ssh-keygen-text" class="backup-progress-out openssh-cmd" title="Clic para copiar" style="font-size:10px;word-break:break-all;white-space:pre-wrap;margin:0;"></pre>
+            </div>
+            <p style="font-size:12px;color:var(--text-muted);margin:8px 0 4px">2. PowerShell como Administrador en el PC Windows:</p>
+            <pre class="backup-progress-out openssh-cmd" id="cmd-win" title="Clic para copiar"># Instalar OpenSSH Server
+Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+Start-Service sshd
+Set-Service -Name sshd -StartupType Automatic
+
+# Pegar la clave publica del NAS (resultado del cat anterior):
+$key = "PEGAR_AQUI_LA_CLAVE_PUB"
+$f = "$env:ProgramData\ssh\administrators_authorized_keys"
+if (!(Test-Path "$env:ProgramData\ssh")) { New-Item -ItemType Directory "$env:ProgramData\ssh" }
+Set-Content $f $key -Encoding utf8
+icacls $f /inheritance:r
+icacls $f /grant "*S-1-5-32-544:F"
+icacls $f /grant "*S-1-5-18:F"
+New-NetFirewallRule -Name "sshd" -DisplayName "OpenSSH Server" -Protocol TCP -LocalPort 22 -Action Allow -Direction Inbound -ErrorAction SilentlyContinue
+Restart-Service sshd</pre>
+            <p style="font-size:11px;color:var(--text-muted);margin:6px 0 0">Clic en cada bloque para copiar.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <aside class="card-group side-panel panel-scroll">
+    <div class="panel-header">
+      <div class="panel-title">Editor de backup</div>
+      <div class="panel-subtitle" id="backup-editor-subtitle">Selecciona un backup</div>
+    </div>
+
+    <!-- Los campos del editor van bloqueados (fieldset disabled) hasta pulsar "Editar" -->
+    <fieldset id="backup-fields" class="backup-fieldset" disabled>
+    <!-- General -->
+    <div class="panel-section">
+      <h3>General</h3>
+      <div class="panel-info">
+        <label>Nombre
+          <input id="backup-name" type="text" placeholder="Backup NAS" />
+        </label>
+        <label class="label-inline">
+          <input id="backup-enabled" type="checkbox" checked />
+          Activar backup
+        </label>
+        <label style="margin-top:8px;">Modo
+          <div style="display:flex;gap:18px;margin-top:5px;">
+            <label class="label-inline" style="margin-top:0">
+              <input type="radio" name="backup-mode" value="rsync" id="backup-mode-rsync" checked /> rsync (NAS)
+            </label>
+            <label class="label-inline" style="margin-top:0">
+              <input type="radio" name="backup-mode" value="ssh" id="backup-mode-ssh" /> SSH (Windows PC)
+            </label>
+            <label class="label-inline" style="margin-top:0">
+              <input type="radio" name="backup-mode" value="local" id="backup-mode-local" /> Local (NAS)
+            </label>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Conexion SSH (solo modo SSH) -->
+    <div class="panel-section" id="ssh-config-section" style="display:none">
+      <h3>Conexion SSH</h3>
+      <div class="panel-info mount-grid">
+        <label>Host PC (IP)
+          <input id="ssh-host" type="text" placeholder="192.168.1.10" />
+        </label>
+        <label>Puerto
+          <input id="ssh-port" type="number" value="22" min="1" max="65535" />
+        </label>
+        <label>Usuario PC
+          <input id="ssh-user" type="text" placeholder="Administrator" />
+        </label>
+<label>Usuario NAS (SMB) <small style="opacity:0.6">— si origen o destino es NAS</small>
+          <input id="ssh-nas-user" type="text" placeholder="jordi" autocomplete="off" />
+        </label>
+        <label>Contrasena NAS (SMB)
+          <input id="ssh-nas-pass" type="password" placeholder="••••••••" autocomplete="new-password" />
+        </label>
+      </div>
+    </div>
+
+    <!-- Origen -->
+    <div class="panel-section" id="src-section-rsync">
+      <h3>Origen</h3>
+      <div class="path-picker-wrap">
+        <div class="path-picker">
+          <input id="backup-src" type="text" placeholder="/data1" autocomplete="off" />
+        </div>
+        <div id="src-dropdown" class="path-dropdown hidden">
+          <div id="src-shortcuts" class="path-shortcuts"></div>
+          <div id="src-browser" class="path-browser thin-scroll"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-section" id="src-section-ssh" style="display:none">
+      <h3>Origen</h3>
+      <div style="display:flex;gap:18px;margin-bottom:8px;">
+        <label class="label-inline" style="margin-top:0">
+          <input type="radio" name="ssh-src-type" value="pc" id="ssh-src-type-pc" checked /> PC Windows
+        </label>
+        <label class="label-inline" style="margin-top:0">
+          <input type="radio" name="ssh-src-type" value="nas" id="ssh-src-type-nas" /> NAS
+        </label>
+      </div>
+      <div id="ssh-src-pc-wrap">
+        <div class="path-picker-wrap">
+          <div class="path-picker">
+            <input id="pc-src-input" type="text" placeholder="D:\Datos" autocomplete="off" />
+          </div>
+          <div id="pc-dropdown" class="path-dropdown hidden">
+            <div id="pc-browser" class="path-browser thin-scroll"></div>
+          </div>
+        </div>
+      </div>
+      <div id="ssh-src-nas-wrap" style="display:none">
+        <div class="path-picker-wrap">
+          <div class="path-picker">
+            <input id="ssh-nas-src-input" type="text" placeholder="/data1" autocomplete="off" />
+          </div>
+          <div id="nas-src-dropdown" class="path-dropdown hidden">
+            <div id="nas-src-shortcuts" class="path-shortcuts"></div>
+            <div id="nas-src-browser" class="path-browser thin-scroll"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Destino -->
+    <div class="panel-section" id="dst-section-rsync">
+      <h3>Destino</h3>
+      <div class="path-picker-wrap">
+        <div class="path-picker">
+          <input id="backup-dst-input" type="text" placeholder="/mnt/backup" autocomplete="off" />
+        </div>
+        <div id="dst-dropdown" class="path-dropdown hidden">
+          <div id="dst-shortcuts" class="path-shortcuts"></div>
+          <div id="dst-browser" class="path-browser thin-scroll"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-section" id="rsync-excl-section">
+      <label>Exclusiones rsync <small style="opacity:0.6">--exclude</small>
+        <p style="font-size:11px;opacity:0.6;margin:2px 0 4px;">Una ruta por linea, sin comillas</p>
+        <textarea id="rsync-excludes" rows="3" style="width:100%;margin-top:2px;font-size:12px;" placeholder=".git&#10;node_modules&#10;*.tmp"></textarea>
+      </label>
+    </div>
+
+    <div class="panel-section" id="src-section-local" style="display:none">
+      <h3>Origen (ruta NAS)</h3>
+      <div class="path-picker-wrap">
+        <div class="path-picker">
+          <input id="local-src-input" type="text" placeholder="/" autocomplete="off" />
+        </div>
+        <div id="local-src-dropdown" class="path-dropdown hidden">
+          <div id="local-src-shortcuts" class="path-shortcuts"></div>
+          <div id="local-src-browser" class="path-browser thin-scroll"></div>
+        </div>
+      </div>
+      <label style="margin-top:8px;display:block;">Exclusiones (una por linea)
+        <textarea id="local-excludes" rows="3" style="width:100%;margin-top:4px;font-size:12px;" placeholder="/proc&#10;/sys&#10;/dev&#10;/run&#10;/tmp&#10;/data1"></textarea>
+      </label>
+    </div>
+
+    <div class="panel-section" id="dst-section-local" style="display:none">
+      <h3>Destino (ruta NAS)</h3>
+      <div class="path-picker-wrap">
+        <div class="path-picker">
+          <input id="local-dst-input" type="text" placeholder="/data1/backup-nas" autocomplete="off" />
+        </div>
+        <div id="local-dst-dropdown" class="path-dropdown hidden">
+          <div id="local-dst-shortcuts" class="path-shortcuts"></div>
+          <div id="local-dst-browser" class="path-browser thin-scroll"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-section" id="dst-section-ssh" style="display:none">
+      <h3>Destino</h3>
+      <div style="display:flex;gap:18px;margin-bottom:8px;">
+        <label class="label-inline" style="margin-top:0">
+          <input type="radio" name="ssh-dst-type" value="pc" id="ssh-dst-type-pc" checked /> PC Windows
+        </label>
+        <label class="label-inline" style="margin-top:0">
+          <input type="radio" name="ssh-dst-type" value="nas" id="ssh-dst-type-nas" /> NAS
+        </label>
+      </div>
+      <div id="ssh-dst-pc-wrap">
+        <div class="path-picker-wrap">
+          <div class="path-picker">
+            <input id="ssh-dst-input" type="text" placeholder="D:\Backups" autocomplete="off" />
+          </div>
+          <div id="pc-dst-dropdown" class="path-dropdown hidden">
+            <div id="pc-dst-browser" class="path-browser thin-scroll"></div>
+          </div>
+        </div>
+      </div>
+      <div id="ssh-dst-nas-wrap" style="display:none">
+        <div class="path-picker-wrap">
+          <div class="path-picker">
+            <input id="ssh-nas-dst-input" type="text" placeholder="/data1/backup" autocomplete="off" />
+          </div>
+          <div id="nas-dst-dropdown" class="path-dropdown hidden">
+            <div id="nas-dst-shortcuts" class="path-shortcuts"></div>
+            <div id="nas-dst-browser" class="path-browser thin-scroll"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Opciones robocopy (solo modo SSH) -->
+    <div class="panel-section" id="robocopy-section" style="display:none">
+      <details>
+      <summary style="cursor:pointer;user-select:none;"><h3 style="display:inline;color:var(--accent)">Opciones robocopy</h3></summary>
+      <div class="panel-info" style="margin-top:8px;">
+        <p style="font-size:11px;opacity:0.6;margin:4px 0 6px;">Una carpeta/archivo por linea, sin comillas</p>
+        <label>Excluir carpetas <small style="opacity:0.6">/XD</small>
+          <textarea id="robocopy-xd" rows="3" style="width:100%;margin-top:4px;font-size:12px;" placeholder="$RECYCLE.BIN&#10;System Volume Information&#10;.git&#10;node_modules"></textarea>
+        </label>
+        <label style="margin-top:6px;display:block;">Excluir archivos <small style="opacity:0.6">/XF</small>
+          <textarea id="robocopy-xf" rows="2" style="width:100%;margin-top:4px;font-size:12px;" placeholder="pagefile.sys&#10;hiberfil.sys&#10;*.tmp"></textarea>
+        </label>
+      </div>
+      </details>
+    </div>
+
+    <!-- WireGuard config (solo modo SSH) -->
+    <div class="panel-section" id="wg-section" style="display:none">
+      <details id="wg-details">
+        <summary style="cursor:pointer;user-select:none;">
+          <h3 style="display:inline;">WireGuard <small style="font-weight:normal;opacity:0.6">— config del PC</small></h3>
+        </summary>
+        <div style="margin-top:0.6rem;">
+          <div style="display:flex;gap:6px;margin-bottom:6px;align-items:center;">
+            <button id="wg-gen-btn" class="btn" type="button" style="flex:1;">Generar config WG</button>
+            <button id="wg-copy-btn" class="btn" type="button">Copiar</button>
+          </div>
+          <textarea id="wg-conf" rows="9" style="width:100%;font-family:monospace;font-size:11px;resize:vertical;box-sizing:border-box;" placeholder="[Interface]&#10;PrivateKey = ...&#10;Address = 10.0.0.x/24&#10;&#10;[Peer]&#10;PublicKey = ...&#10;Endpoint = nas.ddns.net:51820&#10;AllowedIPs = 0.0.0.0/0"></textarea>
+          <p id="wg-gen-note" style="font-size:11px;color:var(--text-muted);margin:4px 0 0;display:none;"></p>
+        </div>
+      </details>
+    </div>
+
+    <!-- Programacion -->
+    <div class="panel-section">
+      <details>
+      <summary style="cursor:pointer;user-select:none;"><h3 style="display:inline;color:var(--accent)">Programacion</h3></summary>
+      <div class="panel-info schedule-grid" style="margin-top:8px;">
+        <label>Frecuencia
+          <select id="backup-frequency">
+            <option value="daily">Diario</option>
+            <option value="weekly">Semanal</option>
+            <option value="monthly">Mensual</option>
+          </select>
+        </label>
+        <label>Hora
+          <input id="backup-time" type="time" value="03:00" />
+        </label>
+      </div>
+      </details>
+    </div>
+    </fieldset>
+
+    <!-- Progreso -->
+    <div class="panel-section" id="backup-progress-section" style="display:none">
+      <h3>Progreso</h3>
+      <div class="backup-progress-bar-wrap">
+        <div class="backup-progress-bar" id="backup-progress-bar"></div>
+      </div>
+      <div class="panel-info" style="margin-top:6px;font-size:0.85em">
+        <div><strong>Copiado:</strong> <span id="bp-copied">&#8212;</span></div>
+        <div><strong>Total:</strong> <span id="bp-total">&#8212;</span></div>
+        <div><strong>Velocidad:</strong> <span id="bp-speed">&#8212;</span></div>
+        <div><strong>Tiempo restante:</strong> <span id="bp-eta">&#8212;</span></div>
+        <div><strong>Transcurrido:</strong> <span id="bp-elapsed">&#8212;</span></div>
+      </div>
+    </div>
+
+    <!-- Acciones -->
+    <div class="panel-section">
+      <h3>Acciones</h3>
+      <div class="panel-actions">
+        <button id="backup-edit" class="btn btn-block" type="button">Editar</button>
+        <button id="backup-save" class="btn btn-block hidden" type="button">Guardar cambios</button>
+        <button id="backup-cancel-edit" class="btn btn-block btn-secondary hidden" type="button">Cancelar</button>
+        <button id="backup-run-job" class="btn btn-block" type="button">Ejecutar ahora</button>
+        <button id="backup-view-log" class="btn btn-block btn-secondary" type="button">Ver último log</button>
+        <button id="backup-delete" class="btn btn-block btn-danger hidden" type="button">Eliminar</button>
+      </div>
+    </div>
+
+    <!-- Montaje SMB (solo modo rsync) -->
+    <div class="panel-section" id="smb-section">
+      {% if session.get('role') != 'viewer' %}
+      <details id="smb-details">
+        <summary style="cursor:pointer;user-select:none;">
+          <h3 style="display:inline;">Montaje SMB <small style="font-weight:normal;opacity:0.6">(auto al ejecutar)</small></h3>
+        </summary>
+        <div class="panel-info mount-grid" style="margin-top:0.6rem;">
+          <label>Host
+            <input id="smb-host" type="text" placeholder="192.168.1.50" />
+          </label>
+          <label>Share
+            <input id="smb-share" type="text" placeholder="Compartido" />
+          </label>
+          <label>Usuario
+            <input id="smb-user" type="text" />
+          </label>
+          <label>Contrasena
+            <input id="smb-pass" type="password" />
+          </label>
+          <label>Montaje
+            <input id="smb-mount" type="text" placeholder="/mnt/pc" />
+          </label>
+          <label>Version
+            <input id="smb-vers" type="text" value="3.0" />
+          </label>
+        </div>
+        <div class="panel-actions">
+          <button id="smb-mount-btn" class="btn btn-block" type="button">Montar</button>
+          <button id="smb-umount-btn" class="btn btn-block" type="button">Desmontar</button>
+        </div>
+        <div class="processes-list mounts-list thin-scroll" id="mounts-list"></div>
+      </details>
+      {% endif %}
+    </div>
+  </aside>
+</div>

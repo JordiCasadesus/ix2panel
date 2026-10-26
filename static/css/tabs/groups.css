@@ -1,0 +1,118 @@
+/* =====================================================
+   GROUPS TAB
+   ===================================================== */
+
+#tab-grupos .groups-left {
+  align-self: start;
+}
+
+#tab-grupos .groups-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 4px;
+  max-height: calc(100vh - 220px);
+  overflow-y: auto;
+}
+
+#tab-grupos #group-filter,
+#tab-grupos #group-member-filter {
+  width: 100%;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-soft);
+  color: var(--text-main);
+  padding: 6px;
+  border-radius: var(--radius);
+  margin-bottom: 6px;
+}
+
+#tab-grupos .group-row {
+  display: grid;
+  grid-template-columns: 1fr 80px 90px;
+  align-items: center;
+  padding: 6px 10px;
+}
+
+#tab-grupos .group-name {
+  font-weight: 500;
+}
+
+#tab-grupos .group-gid {
+  font-size: 15px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+#tab-grupos .group-count {
+  font-size: 15px;
+  text-align: right;
+}
+
+#tab-grupos .groups-actions {
+  margin-top: var(--gap-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#tab-grupos .groups-actions input {
+  width: 100%;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-soft);
+  color: var(--text-main);
+  padding: 6px;
+  border-radius: var(--radius);
+}
+
+#tab-grupos #group-panel {
+  overflow-y: auto;
+  background: var(--bg-section);
+  max-height: calc(100vh - 120px);
+}
+
+#tab-grupos .member-list {
+  font-size: 12px;
+}
+
+#tab-grupos .member-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-soft);
+  border-radius: 4px;
+}
+
+#tab-grupos .member-name {
+  font-weight: 500;
+}
+
+#tab-grupos .member-tag {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  border: 1px solid var(--border-soft);
+  color: var(--text-muted);
+}
+
+#tab-grupos .member-tag.principal {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+#tab-grupos .member-remove {
+  background: transparent;
+  border: 1px solid var(--border-soft);
+  color: var(--text-muted);
+  border-radius: 6px;
+  width: 24px;
+  height: 22px;
+  cursor: pointer;
+}
+
+#tab-grupos .member-remove:hover {
+  color: #fff;
+  border-color: var(--accent);
+}

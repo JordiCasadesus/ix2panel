@@ -1,0 +1,86 @@
+<!-- =====================================================
+     TAB SERVICIOS
+     ===================================================== -->
+
+<div class="services-layout two-column-layout">
+
+  <!-- COLUMNA IZQUIERDA -->
+  <div>
+    <div class="card-group">
+      <h2 class="services-header">
+        <span class="title">Servicios</span>
+        <div class="status-legend">
+          <span><span class="status ok"></span> Operativo</span>
+          <span><span class="status warn"></span> Advertencia</span>
+          <span><span class="status err"></span> Error</span>
+        </div>
+      </h2>
+
+      <div class="grid-1">
+        <div class="card processes-info">
+          <div class="processes-list services-list"></div>
+        </div>
+      </div>
+
+    </div>
+    <!-- FAIL2BAN -->
+    {% if session.get('role') != 'viewer' %}
+    <div class="card-group fail2ban-card">
+      <h2>Fail2ban</h2>
+      <div class="card processes-info">
+        <div class="processes-list" id="fail2ban-jails-list">
+          <div class="process-item"><span class="process-stats">Cargando...</span></div>
+        </div>
+        <div id="fail2ban-msg" style="margin-top:0.5rem;font-size:0.85em;"></div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- COLUMNA DERECHA -->
+  <aside id="service-panel" class="card-group side-panel">
+    <div class="panel-header">
+      <div class="panel-title">Servicio</div>
+      <div class="panel-subtitle" id="panel-service-name">Selecciona un servicio</div>
+    </div>
+
+    <div class="panel-section">
+      <h3>Estado</h3>
+      <div class="panel-info">
+        <div><strong>Estado:</strong> <span id="service-status">—</span></div>
+        <div><strong>Inicio automático:</strong> <span id="service-autostart">—</span></div>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <h3>Red</h3>
+      <div class="panel-info">
+        <div><strong>Puerto:</strong> <span id="service-port">—</span></div>
+        <div><strong>Interfaz:</strong> <span id="service-iface">—</span></div>
+        <div><strong>Protocolo:</strong> <span id="service-proto">TCP</span></div>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <h3>Diagnóstico</h3>
+      <div class="panel-info">
+        <div><strong>Último reinicio:</strong> <span id="service-last-restart">—</span></div>
+        <div><strong>Uptime:</strong> <span id="service-uptime">—</span></div>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <h3>Acciones</h3>
+      <div class="panel-actions">
+        <button id="service-restart" class="btn btn-block" disabled>Reiniciar servicio</button>
+        <button id="service-stop" class="btn btn-block" disabled>Detener servicio</button>
+        <button id="service-logs" class="btn btn-block" disabled>Ver logs</button>
+        <button id="service-enable" class="btn btn-block hidden">Activar firewall</button>
+        <button id="service-disable" class="btn btn-block btn-danger hidden">Desactivar firewall</button>
+      </div>
+    </div>
+  </aside>
+
+
+
+</div>

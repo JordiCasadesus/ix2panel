@@ -1,0 +1,29 @@
+/* =====================================================
+   TERMINAL TAB
+   ===================================================== */
+
+#tab-terminal .login-card {
+  max-width: 420px;
+}
+
+#terminal-wrap {
+  padding: 0;
+  overflow: hidden;
+}
+
+#tab-terminal .terminal-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-sm);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-soft);
+  background: var(--bg-card-alt);
+}
+
+#terminal-container {
+  height: calc(100vh - 260px);
+  min-height: 320px;
+  padding: 8px;
+  background: #0d1117;
+}

@@ -1,0 +1,49 @@
+<!-- =====================================================
+     TAB TERMINAL
+     ===================================================== -->
+
+<div class="card-group">
+  <h2>Terminal</h2>
+
+  <div id="terminal-auth" class="card login-card">
+    <div class="panel-subtitle">
+      Abre una sesión SSH real contra el NAS (localhost:22) con tu usuario Linux.
+      No es el usuario del panel.
+    </div>
+
+    <div class="login-form" style="margin-top:12px;">
+      <!-- Señuelo: absorbe el autocompletado de Chrome antes de que llegue a los campos reales. -->
+      <div style="position:absolute; width:1px; height:1px; overflow:hidden; left:-9999px;" aria-hidden="true">
+        <input type="text" name="username" autocomplete="username" tabindex="-1" />
+        <input type="password" name="password" autocomplete="current-password" tabindex="-1" />
+      </div>
+
+      <div class="login-row">
+        <label for="terminal-user">Usuario Linux</label>
+        <input id="terminal-user" name="terminal-ssh-user" type="text"
+               autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+               readonly placeholder="jordi" />
+      </div>
+
+      <div class="login-row">
+        <label for="terminal-pass">Contraseña</label>
+        <div class="login-pass-wrap">
+          <input id="terminal-pass" name="terminal-ssh-pass" type="password" autocomplete="new-password" readonly />
+          <button type="button" class="login-eye" id="terminal-eye-btn" aria-label="Mostrar contraseña">&#128065;</button>
+        </div>
+      </div>
+
+      <div id="terminal-auth-msg" class="login-error hidden"></div>
+
+      <button id="terminal-connect" class="btn btn-block">Conectar</button>
+    </div>
+  </div>
+
+  <div id="terminal-wrap" class="card hidden">
+    <div class="terminal-toolbar">
+      <span id="terminal-status"><span class="status warn"></span> Desconectado</span>
+      <button id="terminal-disconnect" class="btn btn-sm btn-danger">Cerrar sesión</button>
+    </div>
+    <div id="terminal-container"></div>
+  </div>
+</div>
