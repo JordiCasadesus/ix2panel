@@ -101,7 +101,7 @@ def shutdown_target(name):
              '-o', 'ConnectTimeout=5',
              '-o', 'StrictHostKeyChecking=no',
              '-o', 'BatchMode=yes',
-             f'jordi@{ip}',
+             f'TU_USUARIO@{ip}',
              'shutdown /s /t 5'],
             capture_output=True, text=True, timeout=10
         )

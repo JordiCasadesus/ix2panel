@@ -1,7 +1,7 @@
 # system/devices.py
 # =====================================================
 # Traduce una IP al nombre de un dispositivo conocido, para mostrarlo en el panel
-# (p.ej. "smbd[10.0.0.2]" -> "smbd[10.0.0.2] · Movil de Jordi").
+# (p.ej. "smbd[10.0.0.2]" -> "smbd[10.0.0.2] · Movil de Ana").
 # Fuentes: peers de WireGuard (nombre que se les puso en la pestana VPN) y equipos de Wake-on-LAN.
 # Solo se usa para MOSTRAR: no cambia ningun dato ni se usa para decidir permisos.
 # =====================================================

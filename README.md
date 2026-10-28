@@ -28,6 +28,7 @@ Panel de administración web para el NAS doméstico (Iomega IX2 / Debian Linux).
 16. [Servicio systemd (Gunicorn)](#servicio-systemd-gunicorn)
 17. [Módulos del sistema](#módulos-del-sistema)
 18. [Solución de problemas](#solución-de-problemas)
+19. [Contacto y colaboración](#contacto-y-colaboración)
 
 ---
 
@@ -532,7 +533,7 @@ El login del panel cachea temporalmente usuario/contraseña (`_CRED_CACHE`, TTL 
 
 ## Compartidas SMB
 
-Pestaña **Compartidas**. Permite crear shares SMB apuntando a cualquier ruta bajo `/data1`, `/data2`, `/mnt`, `/media`, `/run/media`, `/home` o `/srv` — **incluidas subcarpetas de un share ya existente**, con usuario/grupo distintos (p.ej. compartir `/data1/Adria` con un usuario `Adria` aparte, dentro de un `/data1` que ya está compartido con `jordi`).
+Pestaña **Compartidas**. Permite crear shares SMB apuntando a cualquier ruta bajo `/data1`, `/data2`, `/mnt`, `/media`, `/run/media`, `/home` o `/srv` — **incluidas subcarpetas de un share ya existente**, con usuario/grupo distintos (p.ej. compartir `/data1/Carpeta2` con un usuario `usuario2` aparte, dentro de un `/data1` que ya está compartido con `usuario1`).
 
 ### Permiso de tránsito en carpetas padre
 
@@ -814,3 +815,15 @@ ssh -i C:\Users\TU_USUARIO\.ssh\ix2panel_key TU_USUARIO@IP_DEL_NAS "sudo systemc
 > scp -i C:\Users\TU_USUARIO\.ssh\ix2panel_key TU_USUARIO@IP_DEL_NAS:/etc/ix2panel/system/power.py system/
 > scp -i C:\Users\TU_USUARIO\.ssh\ix2panel_key TU_USUARIO@IP_DEL_NAS:/etc/ix2panel/system/firmware.py system/
 > ```
+
+---
+
+## Contacto y colaboración
+
+Es un proyecto personal, pero si quieres decirme algo, la vía es GitHub:
+
+- **Fallos, dudas o sugerencias:** abre un [issue](../../issues) en este repositorio. Indica la versión del NAS y del kernel, qué esperabas que pasara y qué pasó, y el log relevante (`journalctl -u ix2panel`), **sin contraseñas, tokens ni IPs públicas**.
+- **Cambios en el código:** abre un [pull request](../../pulls). Antes de un cambio grande, comenta la idea en un issue.
+- **Seguridad:** si encuentras una vulnerabilidad, no la publiques en un issue abierto. Usa *Security → Report a vulnerability* del repositorio, si está disponible, o abre un issue pidiendo un contacto privado sin dar detalles.
+
+Respondo cuando puedo; no hay plazos garantizados. El proyecto se publica con licencia [PolyForm Noncommercial 1.0.0](LICENSE).
