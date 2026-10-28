@@ -815,7 +815,6 @@ ssh -i C:\Users\TU_USUARIO\.ssh\ix2panel_key TU_USUARIO@IP_DEL_NAS "sudo systemc
 > scp -i C:\Users\TU_USUARIO\.ssh\ix2panel_key TU_USUARIO@IP_DEL_NAS:/etc/ix2panel/system/power.py system/
 > scp -i C:\Users\TU_USUARIO\.ssh\ix2panel_key TU_USUARIO@IP_DEL_NAS:/etc/ix2panel/system/firmware.py system/
 > ```
-
 ---
 
 ## Contacto y colaboración
